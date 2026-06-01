@@ -125,8 +125,10 @@ app.delete('/api/faqs/:id', (req, res) => {
 
 // Serve frontend
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
+
+app.use(express.static(__dirname));
 
 app.listen(PORT, () => {
   console.log(`AURUM server running on port ${PORT}`);
