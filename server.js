@@ -12,7 +12,7 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.static('public'));
 
 // Database
-const db = new Database(path.join(process.env.RAILWAY_VOLUME_MOUNT_PATH || '.', 'aurum.db'));
+const db = new Database(path.join(process.env.RAILWAY_VOLUME_MOUNT_PATH || '/data', 'aurum.db'));
 
 // Create tables
 db.exec(`
