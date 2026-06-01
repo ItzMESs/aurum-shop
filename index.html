@@ -1572,6 +1572,9 @@ function goAdmPage(id){
   document.getElementById('adm-sub').textContent = t[1];
   refreshAdmin();
   if(id==='faq') renderFaqAdmin();
+  if(id==='products' || id==='inventory') dbLoadProducts();
+  if(id==='orders') dbLoadOrders();
+  if(id==='dashboard'){ dbLoadProducts(); dbLoadOrders(); }
 }
 
 // ===== REFRESH ADMIN DATA =====
