@@ -1986,7 +1986,7 @@ function closeAddModal(){
   document.getElementById('m-price').classList.remove('err');
   clearImg();
 }
-function addProduct(){
+async function addProduct(){
   const nameEl = document.getElementById('m-name');
   const priceEl = document.getElementById('m-price');
   const name = nameEl.value.trim();
@@ -1997,8 +1997,10 @@ function addProduct(){
   if(!price){ priceEl.classList.add('err'); ok=false; }
   if(!ok){ return; }
 
+  const btn = document.querySelector('#add-modal .tb-btn');
+  if(btn){ btn.textContent='Хадгалж байна...'; btn.disabled=true; }
+
   const prod = {
-    id: nextProdId++,
     name,
     brand: document.getElementById('m-brand').value,
     cat: document.getElementById('m-cat').value,
@@ -2008,11 +2010,16 @@ function addProduct(){
     desc: document.getElementById('m-desc').value.trim(),
     imgData: currentImgData
   };
-  products.push(prod);
-  closeAddModal();
-  renderGrid();
-  refreshAdmin();
-  goAdmPage('products');
+
+  const saved = await dbAddProduct(prod);
+  if(btn){ btn.innerHTML='<i class="ti ti-check" style="font-size:13px"></i>Нэмэх'; btn.disabled=false; }
+
+  if(saved){
+    closeAddModal();
+    await dbLoadProducts();
+    showToast('Бараа амжилттай нэмэгдлээ ✓');
+    goAdmPage('products');
+  }
 }
 
 // ===== STORE: PRODUCTS =====
