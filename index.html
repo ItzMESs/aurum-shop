@@ -1,0 +1,2692 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURUM — Luxury Fashion</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.0.0/dist/tabler-icons.min.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --black:#0a0a0a;--white:#f5f4f0;--accent:#c8a96e;
+  --muted:#777;--border:rgba(255,255,255,0.08);
+  --surface:#111;--surface2:#161616;--surface3:#1c1c1c;
+  --green:#4caf7d;--yellow:#e5a832;--blue:#5b9bd5;--red:#d94f4f;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--white);min-height:100vh;}
+#store-page{display:block;}
+#admin-page{display:none;min-height:100vh;}
+
+/* ===== STORE ===== */
+.snav{display:flex;justify-content:space-between;align-items:center;padding:18px 40px;border-bottom:.5px solid var(--border);position:sticky;top:0;background:rgba(10,10,10,.97);backdrop-filter:blur(12px);z-index:100;}
+.logo{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:4px;cursor:pointer;}
+.logo span{color:var(--accent);}
+.snav ul{list-style:none;display:flex;gap:32px;}
+.snav ul li a{color:var(--muted);font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:color .2s;}
+.snav ul li a:hover{color:var(--white);}
+.nav-right{display:flex;gap:14px;align-items:center;}
+.nav-right>i{font-size:20px;color:var(--muted);cursor:pointer;}
+.nav-right>i:hover{color:var(--white);}
+.cart-wrap{position:relative;cursor:pointer;}
+.cart-num{position:absolute;top:-7px;right:-9px;background:var(--accent);color:var(--black);font-size:10px;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;transition:transform .2s;}
+.adm-btn{display:flex;align-items:center;gap:6px;background:none;color:var(--muted);font-size:11px;letter-spacing:2px;text-transform:uppercase;border:.5px solid var(--border);padding:7px 14px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;}
+.adm-btn:hover{color:var(--accent);border-color:var(--accent);}
+.hero{display:grid;grid-template-columns:1fr 1fr;min-height:88vh;}
+.hero-l{padding:80px 60px;display:flex;flex-direction:column;justify-content:center;}
+.eyebrow{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:24px;}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:96px;line-height:.9;margin-bottom:32px;}
+.hero-title em{font-style:normal;color:var(--accent);}
+.hero-desc{font-size:15px;color:var(--muted);line-height:1.7;max-width:400px;margin-bottom:48px;}
+.hero-btns{display:flex;gap:16px;}
+.btn-gold{padding:14px 36px;background:var(--accent);color:var(--black);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;transition:opacity .2s;}
+.btn-gold:hover{opacity:.85;}
+.btn-ghost{padding:14px 36px;background:transparent;color:var(--white);font-size:12px;letter-spacing:2px;text-transform:uppercase;border:.5px solid rgba(255,255,255,.25);cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-ghost:hover{border-color:var(--white);}
+.hero-r{background:#141414;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;}
+.hero-bg{font-family:'Bebas Neue',sans-serif;font-size:72px;letter-spacing:8px;opacity:.06;line-height:1;text-align:center;user-select:none;}
+.hero-tag{position:absolute;bottom:40px;left:40px;background:var(--accent);color:var(--black);font-size:11px;letter-spacing:2px;text-transform:uppercase;padding:8px 20px;font-weight:700;}
+/* brand marquee */
+.brand-marquee-wrap{
+  overflow:hidden;
+  border-top:.5px solid var(--border);
+  border-bottom:.5px solid var(--border);
+  background:#080808;
+  padding:0;
+  position:relative;
+  height:72px;
+  display:flex;
+  align-items:center;
+}
+.brand-marquee-wrap::before,.brand-marquee-wrap::after{
+  content:'';position:absolute;top:0;bottom:0;width:100px;z-index:2;pointer-events:none;
+}
+.brand-marquee-wrap::before{left:0;background:linear-gradient(to right,#080808 60%,transparent);}
+.brand-marquee-wrap::after{right:0;background:linear-gradient(to left,#080808 60%,transparent);}
+.brand-marquee-track{display:flex;width:100%;overflow:hidden;}
+.brand-marquee-inner{
+  display:flex;align-items:center;gap:0;
+  white-space:nowrap;flex-shrink:0;
+  animation:marquee-scroll 32s linear infinite;
+  will-change:transform;
+}
+.brand-marquee-inner:hover{animation-play-state:paused;}
+.bm-item{
+  display:inline-flex;align-items:center;gap:11px;
+  padding:0 36px;
+  color:rgba(255,255,255,0.22);
+  transition:color .3s;
+  cursor:default;
+  border-right:.5px solid rgba(255,255,255,0.06);
+}
+.bm-item:hover{color:rgba(255,255,255,0.75);}
+.bm-logo{
+  display:flex;align-items:center;justify-content:center;
+  width:32px;height:32px;flex-shrink:0;
+}
+.bm-logo svg{width:32px;height:32px;}
+.bm-name{
+  font-family:'DM Sans',sans-serif;
+  font-size:11px;font-weight:500;
+  letter-spacing:2.5px;
+  text-transform:uppercase;
+}
+@keyframes marquee-scroll{
+  0%{transform:translateX(0);}
+  100%{transform:translateX(-50%);}
+}
+
+.brand-strip{display:flex;justify-content:space-around;padding:22px 60px;border-bottom:.5px solid var(--border);background:#0d0d0d;}
+.bp{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:4px;color:var(--muted);cursor:pointer;padding:8px 24px;border-bottom:1.5px solid transparent;transition:color .2s;}
+.bp:hover{color:var(--white);}
+.bp.on{color:var(--accent);border-bottom-color:var(--accent);}
+.section{padding:72px 40px;}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:2px;margin-bottom:36px;}
+.sec-title span{color:var(--accent);}
+.filters{display:flex;gap:8px;margin-bottom:32px;flex-wrap:wrap;}
+.fp{padding:8px 20px;background:transparent;color:var(--muted);border:.5px solid var(--border);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.fp:hover{border-color:rgba(255,255,255,.25);color:var(--white);}
+.fp.on{background:var(--accent);color:var(--black);border-color:var(--accent);font-weight:700;}
+.pgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;}
+.pcard{background:var(--surface);position:relative;overflow:hidden;cursor:pointer;}
+.pcard:hover .povl{opacity:1;}
+.pcard:hover .pthumb img,.pcard:hover .pthumb-icon{transform:scale(1.04);}
+.pthumb{height:300px;background:#1a1a1a;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;}
+.pthumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+.pthumb-icon{font-size:60px;opacity:.05;transition:transform .4s;position:relative;z-index:0;}
+.pbr{position:absolute;top:16px;left:16px;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:3px;color:var(--white);z-index:2;text-shadow:0 1px 4px rgba(0,0,0,.8);}
+.badge-new{position:absolute;top:16px;right:16px;background:var(--white);color:var(--black);font-size:10px;letter-spacing:2px;padding:4px 10px;font-weight:700;z-index:2;}
+.badge-sale{position:absolute;top:16px;right:16px;background:var(--red);color:#fff;font-size:10px;letter-spacing:2px;padding:4px 10px;font-weight:700;z-index:2;}
+.povl{position:absolute;inset:0;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;z-index:3;}
+.add-btn{padding:12px 28px;background:var(--accent);color:var(--black);font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.add-btn:hover{opacity:.85;}
+.pinfo{padding:16px;border-top:.5px solid var(--border);}
+.pname{font-size:13px;margin-bottom:8px;line-height:1.4;}
+.prow{display:flex;justify-content:space-between;align-items:center;}
+.pprice{font-size:15px;font-weight:500;color:var(--accent);}
+.pprice.red{color:var(--red);}
+.porig{font-size:12px;color:var(--muted);text-decoration:line-through;margin-right:6px;}
+.wish{background:none;border:none;cursor:pointer;color:var(--muted);font-size:18px;}
+.wish:hover,.wish.on{color:var(--red);}
+.empty-grid{grid-column:1/-1;padding:80px 20px;text-align:center;color:var(--muted);}
+.empty-grid i{font-size:48px;opacity:.2;display:block;margin-bottom:16px;}
+.banner{margin:0 40px;background:var(--surface);border:.5px solid var(--border);padding:56px 60px;display:flex;justify-content:space-between;align-items:center;gap:40px;}
+.banner h2{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:2px;margin-bottom:10px;}
+.banner h2 span{color:var(--accent);}
+.banner p{color:var(--muted);font-size:14px;line-height:1.7;max-width:480px;}
+footer{margin-top:80px;padding:44px 40px;border-top:.5px solid var(--border);display:flex;justify-content:space-between;align-items:center;}
+.flogo{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:4px;}
+.flogo span{color:var(--accent);}
+.flinks{display:flex;gap:28px;}
+.flinks a{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;}
+.flinks a:hover{color:var(--white);}
+.flinks a.gold{color:var(--accent);}
+.fcopy{font-size:11px;color:var(--muted);}
+
+/* CART */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;opacity:0;pointer-events:none;transition:opacity .3s;}
+.scrim.on{opacity:1;pointer-events:all;}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:420px;background:var(--surface);border-left:.5px solid var(--border);z-index:201;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;}
+.drawer.on{transform:translateX(0);}
+.drw-head{display:flex;justify-content:space-between;align-items:center;padding:22px 24px;border-bottom:.5px solid var(--border);}
+.drw-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;}
+.ico-btn{background:none;border:none;color:var(--muted);font-size:22px;cursor:pointer;}
+.ico-btn:hover{color:var(--white);}
+.drw-body{flex:1;overflow-y:auto;padding:8px 0;}
+.empty-cart{display:flex;flex-direction:column;align-items:center;justify-content:center;height:200px;gap:14px;color:var(--muted);}
+.empty-cart i{font-size:44px;opacity:.25;}
+.ci{display:flex;gap:14px;padding:16px 20px;border-bottom:.5px solid var(--border);}
+.ci-img{width:68px;height:78px;background:var(--surface3);display:flex;align-items:center;justify-content:center;flex-shrink:0;overflow:hidden;}
+.ci-img i{font-size:26px;opacity:.12;}
+.ci-img img{width:100%;height:100%;object-fit:cover;}
+.ci-data{flex:1;}
+.ci-brand{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.ci-name{font-size:13px;font-weight:500;margin-bottom:6px;line-height:1.3;}
+.ci-price{font-size:13px;color:var(--accent);font-weight:500;}
+.ci-qty{display:flex;align-items:center;gap:10px;margin-top:10px;}
+.qbtn{width:26px;height:26px;border:.5px solid var(--border);background:none;color:var(--white);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;}
+.qbtn:hover{border-color:var(--accent);color:var(--accent);}
+.qval{font-size:13px;min-width:18px;text-align:center;}
+.ci-del{background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;align-self:flex-start;}
+.ci-del:hover{color:var(--red);}
+.drw-foot{padding:18px 20px;border-top:.5px solid var(--border);}
+.tot-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.tot-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.tot-val{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--accent);}
+.free-note{font-size:11px;color:var(--muted);margin-bottom:16px;}
+.checkout-btn{width:100%;padding:15px;background:var(--accent);color:var(--black);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.checkout-btn:hover{opacity:.88;}
+
+/* CHECKOUT */
+.co-wrap{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:300;display:none;align-items:flex-start;justify-content:center;padding:32px 16px;overflow-y:auto;}
+.co-wrap.on{display:flex;}
+.co-box{background:var(--surface);border:.5px solid var(--border);width:100%;max-width:720px;}
+.steps-bar{display:flex;border-bottom:.5px solid var(--border);}
+.step-tab{flex:1;padding:18px 20px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);border-bottom:2px solid transparent;display:flex;align-items:center;gap:9px;}
+.step-tab.act{color:var(--accent);border-bottom-color:var(--accent);}
+.step-tab.done{color:var(--white);}
+.snum{width:22px;height:22px;border:.5px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;}
+.step-tab.done .snum{background:var(--accent);border-color:var(--accent);color:var(--black);}
+.co-inner{display:flex;}
+.co-form{flex:1;padding:28px 32px;}
+.co-aside{width:240px;background:#0d0d0d;border-left:.5px solid var(--border);padding:24px;}
+.flabel{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:7px;}
+.fi{width:100%;padding:11px 14px;background:var(--surface2);border:.5px solid var(--border);color:var(--white);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.fi:focus{border-color:var(--accent);}
+.fi.err{border-color:var(--red);}
+.fsel{width:100%;padding:11px 14px;background:var(--surface2);border:.5px solid var(--border);color:var(--white);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;appearance:none;}
+.fsel option{background:var(--surface2);}
+.fg{margin-bottom:16px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+.dopt{display:flex;align-items:center;gap:14px;padding:16px;border:.5px solid var(--border);cursor:pointer;margin-bottom:10px;transition:border-color .2s;}
+.dopt:hover{border-color:rgba(255,255,255,.2);}
+.dopt.on{border-color:var(--accent);background:rgba(200,169,110,.06);}
+.dopt-icon{width:42px;height:42px;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+.dopt-name{font-size:13px;font-weight:500;}
+.dopt-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+.bank-box{background:var(--surface2);border:.5px solid var(--border);padding:22px;}
+.bank-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:16px;}
+.brow{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:.5px solid rgba(255,255,255,.04);}
+.brow:last-child{border-bottom:none;}
+.bkey{font-size:12px;color:var(--muted);}
+.bval{font-size:13px;font-weight:500;display:flex;align-items:center;gap:8px;}
+.cbtn{background:none;border:.5px solid var(--border);color:var(--muted);font-size:11px;padding:3px 9px;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.cbtn:hover{color:var(--white);}
+.bank-note{font-size:12px;color:var(--muted);margin-top:14px;line-height:1.6;}
+.bank-note b{color:var(--white);font-weight:500;}
+.co-stl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:18px;}
+.sum-item{display:flex;justify-content:space-between;font-size:12px;padding:9px 0;border-bottom:.5px solid rgba(255,255,255,.05);}
+.sum-iname{color:var(--muted);max-width:140px;line-height:1.4;}
+.sum-iprice{color:var(--accent);font-weight:500;white-space:nowrap;margin-left:8px;}
+.sum-div{border:none;border-top:.5px solid var(--border);margin:12px 0;}
+.sum-del-row{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-bottom:8px;}
+.sum-tot{display:flex;justify-content:space-between;align-items:baseline;}
+.sum-tot-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.sum-tot-val{font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--accent);}
+.co-foot{display:flex;justify-content:space-between;align-items:center;padding:18px 32px;border-top:.5px solid var(--border);}
+.btn-bk{padding:11px 26px;background:transparent;color:var(--muted);border:.5px solid var(--border);font-size:11px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-bk:hover{color:var(--white);}
+.btn-nx{padding:11px 32px;background:var(--accent);color:var(--black);font-size:12px;letter-spacing:2px;text-transform:uppercase;font-weight:700;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-nx:hover{opacity:.88;}
+.co-ok{padding:56px 32px;text-align:center;flex-direction:column;align-items:center;gap:16px;display:none;}
+.co-ok.show{display:flex;}
+.ok-icon{width:64px;height:64px;border-radius:50%;background:rgba(76,175,125,.1);display:flex;align-items:center;justify-content:center;font-size:28px;color:var(--green);}
+.ok-title{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;}
+.ok-sub{font-size:14px;color:var(--muted);max-width:360px;line-height:1.7;}
+.ok-num{background:var(--surface2);border:.5px solid var(--border);padding:14px 28px;font-size:13px;color:var(--muted);}
+.ok-num span{color:var(--accent);font-weight:500;}
+
+/* ===== ADMIN ===== */
+.sidebar{
+  width:220px;min-height:100vh;background:var(--surface);
+  border-right:.5px solid var(--border);display:flex;flex-direction:column;
+  position:fixed;top:0;left:0;bottom:0;overflow-y:auto;flex-shrink:0;
+  z-index:10;
+}
+.sb-logo{padding:24px 20px;border-bottom:.5px solid var(--border);font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:4px;white-space:nowrap;}
+.sb-logo span{color:var(--accent);}
+.sb-logo small{display:block;font-family:'DM Sans',sans-serif;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-top:2px;font-weight:400;}
+.sb-nav{flex:1;padding:8px 0;}
+.sb-sec{padding:16px 16px 6px;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.nitem{display:flex;align-items:center;gap:10px;padding:10px 20px;color:var(--muted);font-size:13px;cursor:pointer;transition:all .2s;border-left:2px solid transparent;white-space:nowrap;}
+.nitem:hover{color:var(--white);background:var(--surface2);}
+.nitem.on{color:var(--accent);background:rgba(200,169,110,.07);border-left-color:var(--accent);}
+.nitem i{font-size:18px;flex-shrink:0;}
+.nb{margin-left:auto;background:var(--accent);color:var(--black);font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px;flex-shrink:0;}
+.sb-foot{padding:14px 20px;border-top:.5px solid var(--border);}
+.back-store{display:flex;align-items:center;gap:10px;background:none;border:none;border-bottom:.5px solid var(--border);color:var(--muted);font-size:12px;padding:10px 0;margin-bottom:14px;cursor:pointer;transition:color .2s;font-family:'DM Sans',sans-serif;width:100%;text-align:left;white-space:nowrap;}
+.back-store:hover{color:var(--accent);}
+.adm-prof{display:flex;align-items:center;gap:10px;}
+.adm-av{width:34px;height:34px;border-radius:50%;background:rgba(200,169,110,.15);display:flex;align-items:center;justify-content:center;color:var(--accent);font-size:13px;font-weight:600;flex-shrink:0;}
+.main-area{margin-left:220px;flex:1;display:flex;flex-direction:column;min-width:0;}
+.topbar{display:flex;justify-content:space-between;align-items:center;padding:14px 28px;border-bottom:.5px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:50;gap:16px;}
+.tb-l{min-width:0;}
+.tb-l h1{font-size:17px;font-weight:500;white-space:nowrap;}
+.tb-l p{font-size:12px;color:var(--muted);margin-top:2px;}
+.tb-r{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.tb-btn{display:flex;align-items:center;gap:7px;padding:8px 18px;background:var(--accent);color:var(--black);font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:600;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;}
+.tb-btn:hover{opacity:.85;}
+.store-view-btn{display:flex;align-items:center;gap:7px;padding:8px 14px;background:transparent;color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase;border:.5px solid var(--border);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;}
+.store-view-btn:hover{color:var(--accent);border-color:var(--accent);}
+.ib{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:.5px solid var(--border);background:none;color:var(--muted);cursor:pointer;position:relative;flex-shrink:0;}
+.ib:hover{color:var(--white);}
+.ndot{position:absolute;top:5px;right:5px;width:6px;height:6px;border-radius:50%;background:var(--accent);}
+.content{padding:24px 28px;flex:1;}
+.ap{display:none;}
+.ap.on{display:block;}
+
+/* Admin stats */
+.sgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px;}
+.stat{background:var(--surface);border:.5px solid var(--border);padding:20px;}
+.stat-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:12px;}
+.stat-lbl{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);}
+.stat-ico{width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:17px;}
+.sa{background:rgba(200,169,110,.1);color:var(--accent);}
+.sg{background:rgba(76,175,125,.1);color:var(--green);}
+.sb2{background:rgba(91,155,213,.1);color:var(--blue);}
+.sr{background:rgba(217,79,79,.1);color:var(--red);}
+.stat-val{font-size:24px;font-weight:500;font-family:'Bebas Neue',sans-serif;letter-spacing:1px;margin-bottom:4px;}
+.stat-ch{font-size:11px;display:flex;align-items:center;gap:4px;}
+.up{color:var(--green);}
+.dn{color:var(--red);}
+
+/* Admin table */
+.panel{background:var(--surface);border:.5px solid var(--border);}
+.ph{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:.5px solid var(--border);}
+.pt{font-size:14px;font-weight:500;}
+table{width:100%;border-collapse:collapse;}
+th{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-weight:400;padding:11px 20px;text-align:left;border-bottom:.5px solid var(--border);}
+td{padding:11px 20px;font-size:13px;border-bottom:.5px solid var(--border);}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--surface2);}
+.oid{font-size:12px;color:var(--muted);}
+.badge{display:inline-block;padding:3px 10px;font-size:10px;letter-spacing:1px;text-transform:uppercase;font-weight:500;border-radius:2px;}
+.bg{background:rgba(76,175,125,.12);color:var(--green);}
+.by{background:rgba(229,168,50,.12);color:var(--yellow);}
+.bb{background:rgba(91,155,213,.12);color:var(--blue);}
+.br{background:rgba(217,79,79,.12);color:var(--red);}
+.amt{font-weight:500;color:var(--accent);}
+.ch{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;}
+.ch h2{font-size:16px;font-weight:500;}
+.empty-table{padding:48px;text-align:center;color:var(--muted);}
+.empty-table i{font-size:36px;opacity:.2;display:block;margin-bottom:12px;}
+
+/* chart */
+.chart-area{padding:16px 20px;height:160px;display:flex;align-items:flex-end;gap:5px;}
+.bw{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;}
+.bar{width:100%;background:rgba(200,169,110,.18);cursor:pointer;min-height:4px;border-top:1.5px solid var(--accent);}
+.bar:hover{background:rgba(200,169,110,.35);}
+.blbl{font-size:9px;color:var(--muted);}
+
+/* inventory */
+.inv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+.ic{background:var(--surface);border:.5px solid var(--border);padding:16px;}
+.in{font-size:13px;font-weight:500;margin-bottom:2px;}
+.ib2{font-size:11px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px;}
+.inum{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:1px;}
+.inum.low{color:var(--red);}
+.inum.ok{color:var(--green);}
+.inum.mid{color:var(--yellow);}
+.itrk{height:3px;background:var(--surface3);margin-top:8px;}
+.ifill{height:100%;}
+.ifill.low{background:var(--red);}
+.ifill.ok{background:var(--green);}
+.ifill.mid{background:var(--yellow);}
+.isub{font-size:11px;color:var(--muted);margin-top:5px;}
+
+/* modal */
+.mov{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
+.mov.open{display:flex;}
+.modal{background:var(--surface);border:.5px solid var(--border);width:100%;max-width:540px;max-height:90vh;overflow-y:auto;}
+.mh{display:flex;justify-content:space-between;align-items:center;padding:20px 22px;border-bottom:.5px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:1;}
+.mt2{font-size:15px;font-weight:500;}
+.mc{background:none;border:none;color:var(--muted);font-size:20px;cursor:pointer;}
+.mc:hover{color:var(--white);}
+.mb{padding:20px 22px;}
+.mf{padding:16px 22px;border-top:.5px solid var(--border);display:flex;justify-content:flex-end;gap:10px;position:sticky;bottom:0;background:var(--surface);}
+.mr2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;}
+.mg{margin-bottom:12px;}
+.ml{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.mi{width:100%;padding:10px 12px;background:var(--surface2);border:.5px solid var(--border);color:var(--white);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s;}
+.mi:focus{border-color:var(--accent);}
+.mi.err{border-color:var(--red);}
+.ms{width:100%;padding:10px 12px;background:var(--surface2);border:.5px solid var(--border);color:var(--white);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;appearance:none;}
+.mta{width:100%;padding:10px 12px;background:var(--surface2);border:.5px solid var(--border);color:var(--white);font-size:13px;font-family:'DM Sans',sans-serif;outline:none;resize:vertical;min-height:60px;}
+.btn-cancel{padding:9px 20px;background:transparent;color:var(--muted);border:.5px solid var(--border);font-size:11px;letter-spacing:1px;text-transform:uppercase;cursor:pointer;font-family:'DM Sans',sans-serif;}
+.btn-cancel:hover{color:var(--white);}
+
+/* img upload */
+.img-drop{height:140px;background:var(--surface3);border:1.5px dashed rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s;position:relative;overflow:hidden;}
+.img-drop:hover{border-color:var(--accent);}
+.img-drop img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.img-drop-label{text-align:center;pointer-events:none;}
+
+/* about page */
+.about-page{display:none;}
+.about-page.on{display:block;}
+.about-hero{background:#0d0d0d;border-bottom:.5px solid var(--border);padding:80px 80px 72px;}
+.about-hero-inner{max-width:760px;}
+.about-tag{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:20px;}
+.about-h1{font-family:'Bebas Neue',sans-serif;font-size:72px;line-height:.95;letter-spacing:2px;margin-bottom:28px;}
+.about-h1 span{color:var(--accent);}
+.about-lead{font-size:16px;color:var(--muted);line-height:1.8;max-width:600px;}
+.about-body{padding:72px 80px;display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:1200px;}
+.about-section-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;margin-bottom:20px;}
+.about-section-title span{color:var(--accent);}
+.about-text{font-size:14px;color:var(--muted);line-height:1.8;margin-bottom:14px;}
+.about-values{display:flex;flex-direction:column;gap:14px;margin-top:8px;}
+.about-val{display:flex;align-items:flex-start;gap:14px;padding:16px;background:var(--surface);border:.5px solid var(--border);}
+.about-val-icon{width:38px;height:38px;background:rgba(200,169,110,.1);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--accent);flex-shrink:0;}
+.about-val-title{font-size:13px;font-weight:500;margin-bottom:4px;}
+.about-val-text{font-size:12px;color:var(--muted);line-height:1.6;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
+.contact-card{background:var(--surface);border:.5px solid var(--border);padding:20px;display:flex;align-items:flex-start;gap:14px;}
+.contact-card-icon{width:38px;height:38px;background:rgba(200,169,110,.1);display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--accent);flex-shrink:0;}
+.contact-card-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.contact-card-val{font-size:13px;font-weight:500;}
+.contact-form{background:var(--surface);border:.5px solid var(--border);padding:28px;}
+.contact-form-title{font-size:14px;font-weight:500;margin-bottom:20px;}
+.about-divider{border:none;border-top:.5px solid var(--border);margin:0 80px;}
+
+/* faq page */
+.faq-page{display:none;}
+.faq-page.on{display:block;}
+.faq-hero{background:#0d0d0d;border-bottom:.5px solid var(--border);padding:64px 80px;}
+.faq-hero-tag{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:16px;}
+.faq-hero h1{font-family:'Bebas Neue',sans-serif;font-size:64px;letter-spacing:2px;line-height:.95;margin-bottom:18px;}
+.faq-hero h1 span{color:var(--accent);}
+.faq-hero p{font-size:14px;color:var(--muted);max-width:520px;line-height:1.7;}
+.faq-body{padding:64px 80px;max-width:900px;}
+.faq-cats{display:flex;gap:8px;margin-bottom:40px;flex-wrap:wrap;}
+.faq-cat{padding:8px 20px;background:transparent;color:var(--muted);border:.5px solid var(--border);font-size:11px;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;font-family:'DM Sans',sans-serif;}
+.faq-cat:hover{color:var(--white);border-color:rgba(255,255,255,.25);}
+.faq-cat.on{background:var(--accent);color:var(--black);border-color:var(--accent);font-weight:700;}
+.faq-list{display:flex;flex-direction:column;gap:2px;}
+.faq-item{background:var(--surface);border:.5px solid var(--border);overflow:hidden;}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:20px 24px;cursor:pointer;transition:background .2s;gap:16px;}
+.faq-q:hover{background:var(--surface2);}
+.faq-q-text{font-size:14px;font-weight:500;line-height:1.4;}
+.faq-icon{font-size:18px;color:var(--accent);flex-shrink:0;transition:transform .25s;}
+.faq-icon.open{transform:rotate(45deg);}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.faq-a.open{max-height:400px;}
+.faq-a-inner{padding:0 24px 20px;font-size:13px;color:var(--muted);line-height:1.8;border-top:.5px solid var(--border);}
+.faq-empty{padding:48px;text-align:center;color:var(--muted);}
+.faq-empty i{font-size:36px;opacity:.2;display:block;margin-bottom:12px;}
+
+/* search */
+.search-overlay{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:400;display:none;flex-direction:column;padding:80px 40px 40px;}
+.search-overlay.open{display:flex;}
+.search-input-wrap{display:flex;align-items:center;gap:16px;border-bottom:.5px solid rgba(255,255,255,.2);padding-bottom:20px;margin-bottom:32px;}
+.search-input-wrap i{font-size:24px;color:var(--muted);}
+.search-input{background:none;border:none;outline:none;font-size:28px;color:var(--white);font-family:'DM Sans',sans-serif;width:100%;}
+.search-input::placeholder{color:rgba(255,255,255,.2);}
+.search-results{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;overflow-y:auto;}
+.search-empty{color:var(--muted);font-size:14px;}
+/* wishlist */
+.wl-num{position:absolute;top:-4px;right:-4px;background:var(--accent);color:var(--black);font-size:9px;font-weight:700;width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+/* order track */
+.track-page{display:none;}
+.track-page.on{display:block;}
+.track-hero{background:#0d0d0d;border-bottom:.5px solid var(--border);padding:64px 80px;}
+.track-body{padding:48px 80px;max-width:700px;}
+.track-input-wrap{display:flex;gap:12px;margin-bottom:40px;}
+.track-input{flex:1;background:var(--surface);border:.5px solid var(--border);color:var(--white);padding:14px 18px;font-size:14px;font-family:'DM Sans',sans-serif;outline:none;}
+.track-input:focus{border-color:var(--accent);}
+.track-result{background:var(--surface);border:.5px solid var(--border);padding:28px;}
+.track-num{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;margin-bottom:20px;}
+.track-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:.5px solid var(--border);font-size:13px;}
+.track-row:last-child{border-bottom:none;}
+.track-label{color:var(--muted);}
+.track-steps{display:flex;gap:0;margin:28px 0;}
+.track-step{flex:1;text-align:center;position:relative;}
+.track-step::before{content:'';position:absolute;top:14px;left:-50%;width:100%;height:1px;background:var(--border);}
+.track-step:first-child::before{display:none;}
+.track-step-dot{width:28px;height:28px;border-radius:50%;background:var(--surface2);border:2px solid var(--border);margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:12px;position:relative;z-index:1;}
+.track-step.done .track-step-dot{background:var(--accent);border-color:var(--accent);color:var(--black);}
+.track-step-label{font-size:10px;color:var(--muted);letter-spacing:1px;}
+/* size color */
+.size-opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.size-opt{padding:6px 12px;border:.5px solid var(--border);font-size:11px;cursor:pointer;background:none;color:var(--white);font-family:'DM Sans',sans-serif;}
+.size-opt.on,.size-opt:hover{background:var(--accent);color:var(--black);border-color:var(--accent);}
+.color-opts{display:flex;gap:8px;margin-top:6px;}
+.color-opt{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;}
+.color-opt.on{border-color:var(--accent);}
+/* chart */
+.chart-bars{display:flex;align-items:flex-end;gap:8px;height:160px;margin-top:16px;}
+.chart-bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.chart-bar{width:100%;background:var(--accent);opacity:.7;border-radius:2px 2px 0 0;min-height:2px;transition:height .4s;}
+.chart-bar-label{font-size:10px;color:var(--muted);letter-spacing:1px;}
+.chart-bar-val{font-size:10px;color:var(--accent);}
+
+/* multi image upload */
+.multi-img-upload{background:var(--surface);border:.5px solid var(--border);padding:14px;}
+.img-thumbs{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-start;}
+.img-thumb-item{position:relative;width:80px;height:80px;flex-shrink:0;}
+.img-thumb-item img{width:80px;height:80px;object-fit:cover;display:block;}
+.img-thumb-remove{position:absolute;top:-6px;right:-6px;width:18px;height:18px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:10px;color:#fff;border:none;}
+.img-add-btn{width:80px;height:80px;border:.5px dashed rgba(255,255,255,.2);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:border-color .2s;}
+.img-add-btn:hover{border-color:var(--accent);}
+/* product detail modal */
+.pd-mov{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:500;display:none;align-items:center;justify-content:center;padding:20px;}
+.pd-mov.open{display:flex;}
+.pd-modal{background:var(--surface);border:.5px solid var(--border);max-width:900px;width:100%;max-height:90vh;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;}
+.pd-imgs{position:relative;background:#0d0d0d;}
+.pd-img-main{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;}
+.pd-img-main-placeholder{width:100%;aspect-ratio:3/4;display:flex;align-items:center;justify-content:center;background:var(--surface2);}
+.pd-img-thumbs{display:flex;gap:6px;padding:10px;overflow-x:auto;}
+.pd-img-thumb{width:56px;height:56px;object-fit:cover;cursor:pointer;border:2px solid transparent;flex-shrink:0;opacity:.6;transition:all .2s;}
+.pd-img-thumb.on{border-color:var(--accent);opacity:1;}
+.pd-info{padding:32px 28px;display:flex;flex-direction:column;gap:16px;}
+.pd-brand{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--accent);}
+.pd-name{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:2px;line-height:1;}
+.pd-price{font-size:24px;font-weight:500;color:var(--accent);}
+.pd-desc{font-size:13px;color:var(--muted);line-height:1.7;}
+.pd-opt-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.pd-close{position:absolute;top:12px;right:12px;background:rgba(0,0,0,.6);border:none;color:var(--white);width:32px;height:32px;cursor:pointer;font-size:18px;display:flex;align-items:center;justify-content:center;}
+@media(max-width:768px){
+  .pd-modal{grid-template-columns:1fr;}
+  .pd-img-main{aspect-ratio:4/3;}
+}
+/* product image slider in grid */
+.pthumb-slider{position:relative;width:100%;height:100%;}
+.pthumb-slide{position:absolute;inset:0;opacity:0;transition:opacity .3s;}
+.pthumb-slide.on{opacity:1;}
+.pthumb-dots{position:absolute;bottom:6px;left:0;right:0;display:flex;justify-content:center;gap:4px;z-index:2;}
+.pthumb-dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;}
+.pthumb-dot.on{background:var(--accent);}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:#222;border-radius:2px;}
+
+/* ===== MOBILE RESPONSIVE ===== */
+@media (max-width: 768px) {
+
+  /* STORE NAV */
+  .snav { padding: 14px 16px; gap: 10px; }
+  .snav ul { display: none; }
+  .nav-right { gap: 10px; }
+  .adm-btn { padding: 6px 10px; font-size: 10px; gap: 4px; }
+  .adm-btn i { font-size: 12px; }
+
+  /* HERO */
+  .hero { grid-template-columns: 1fr; min-height: auto; }
+  .hero-l { padding: 48px 20px 36px; }
+  .hero-title { font-size: 52px; }
+  .hero-desc { font-size: 13px; margin-bottom: 28px; }
+  .hero-btns { flex-direction: column; gap: 10px; }
+  .btn-gold, .btn-ghost { padding: 13px 24px; width: 100%; text-align: center; }
+  .hero-r { display: none; }
+
+  /* BRAND MARQUEE */
+  .brand-marquee-wrap { height: 56px; }
+  .bm-item { padding: 0 20px; gap: 8px; }
+  .bm-logo { width: 24px; height: 24px; }
+  .bm-logo svg { width: 24px; height: 24px; }
+  .bm-name { font-size: 9px; letter-spacing: 1.5px; }
+
+  /* BRAND STRIP */
+  .brand-strip { padding: 14px 12px; gap: 4px; flex-wrap: wrap; justify-content: center; }
+  .bp { font-size: 13px; letter-spacing: 2px; padding: 6px 14px; }
+
+  /* PRODUCTS */
+  .section { padding: 36px 14px; }
+  .sec-title { font-size: 32px; margin-bottom: 20px; }
+  .filters { gap: 6px; margin-bottom: 20px; }
+  .fp { padding: 6px 14px; font-size: 10px; letter-spacing: 1px; }
+  .pgrid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
+  .pthumb { height: 200px; }
+  .pthumb i { font-size: 40px; }
+  .pinfo { padding: 12px; }
+  .pname { font-size: 12px; margin-bottom: 6px; }
+  .pprice { font-size: 13px; }
+
+  /* BANNER */
+  .banner { margin: 0 14px; padding: 32px 20px; flex-direction: column; gap: 20px; }
+  .banner h2 { font-size: 32px; }
+  .banner p { font-size: 13px; }
+  .banner .btn-gold { width: 100%; }
+
+  /* FOOTER */
+  footer { padding: 28px 16px; flex-direction: column; gap: 16px; text-align: center; }
+  .flinks { flex-wrap: wrap; justify-content: center; gap: 14px; }
+  .flinks a { font-size: 10px; }
+
+  /* CART DRAWER */
+  .drawer { width: 100%; }
+
+  /* CHECKOUT */
+  .co-box { max-width: 100%; margin: 0; }
+  .co-inner { flex-direction: column; }
+  .co-form { padding: 20px 16px; }
+  .co-aside { width: 100%; border-left: none; border-top: .5px solid var(--border); padding: 16px; }
+  .steps-bar { overflow-x: auto; }
+  .step-tab { padding: 14px 12px; font-size: 9px; letter-spacing: 1px; min-width: 80px; }
+  .row2 { grid-template-columns: 1fr; }
+  .co-foot { padding: 14px 16px; }
+  .co-ok { padding: 36px 16px; }
+  .ok-title { font-size: 28px; }
+
+  /* ABOUT PAGE */
+  .about-hero { padding: 40px 20px; }
+  .about-h1 { font-size: 44px; }
+  .about-lead { font-size: 13px; }
+  .about-body { padding: 36px 20px; grid-template-columns: 1fr; gap: 32px; }
+  .about-section-title { font-size: 26px; }
+  .contact-grid { grid-template-columns: 1fr; }
+  #contact-section { padding: 36px 20px; }
+  .contact-form { padding: 20px; }
+
+  /* FAQ PAGE */
+  .faq-hero { padding: 40px 20px; }
+  .faq-hero h1 { font-size: 44px; }
+  .faq-body { padding: 36px 20px; }
+  .faq-cats { gap: 6px; }
+  .faq-cat { padding: 7px 14px; font-size: 10px; }
+  .faq-q { padding: 16px; }
+  .faq-q-text { font-size: 13px; }
+  .faq-a-inner { padding: 0 16px 16px; font-size: 12px; }
+
+  /* ADMIN SIDEBAR */
+  .sidebar {
+    width: 100%;
+    height: auto;
+    min-height: unset;
+    position: fixed;
+    top: auto;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    flex-direction: row;
+    border-right: none;
+    border-top: .5px solid var(--border);
+    z-index: 100;
+    overflow-x: auto;
+    overflow-y: hidden;
+  }
+  .sb-logo { display: none; }
+  .sb-nav {
+    flex: 1;
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+  .sb-nav::-webkit-scrollbar { display: none; }
+  .sb-sec { display: none; }
+  .nitem {
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 16px;
+    border-left: none;
+    border-top: 2px solid transparent;
+    min-width: 64px;
+    justify-content: center;
+    align-items: center;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .nitem.on { border-top-color: var(--accent); border-left-color: transparent; }
+  .nitem i { font-size: 20px; }
+  .nitem span { display: block; }
+  .nb { position: absolute; top: 6px; right: 6px; font-size: 8px; padding: 1px 4px; }
+  .nitem { position: relative; }
+  .sb-foot { display: none; }
+
+  /* ADMIN MAIN AREA */
+  .main-area { margin-left: 0; margin-bottom: 72px; }
+  .topbar { padding: 12px 14px; flex-wrap: wrap; gap: 8px; }
+  .tb-l h1 { font-size: 15px; }
+  .tb-l p { display: none; }
+  .tb-r { gap: 6px; }
+  .store-view-btn { display: none; }
+  .tb-btn { padding: 7px 12px; font-size: 10px; gap: 5px; }
+  .content { padding: 16px 14px 14px; }
+
+  /* ADMIN STATS */
+  .sgrid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+  .stat { padding: 16px; }
+  .stat-val { font-size: 20px; }
+  .stat-ch { font-size: 10px; }
+
+  /* ADMIN TABLES */
+  .two-col { grid-template-columns: 1fr; gap: 14px; }
+  .panel table { font-size: 12px; }
+  th { padding: 10px 12px; font-size: 9px; }
+  td { padding: 10px 12px; }
+
+  /* ADMIN INVENTORY */
+  .inv-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .ic { padding: 14px; }
+
+  /* ADMIN SETTINGS */
+  .ap #ap-settings > div,
+  .content > .ap > div[style*="grid"] { grid-template-columns: 1fr !important; }
+
+  /* MODAL */
+  .mov { padding: 12px; align-items: flex-end; }
+  .modal { max-width: 100% !important; max-height: 88vh; border-radius: 0; }
+  .mb { padding: 16px; }
+  .mh { padding: 16px; }
+  .mf { padding: 12px 16px; }
+  .mr2 { grid-template-columns: 1fr; }
+
+  /* LOGIN MODAL */
+  #login-modal { align-items: center; padding: 16px; }
+  #login-modal .modal { max-height: 90vh; }
+
+  /* CHART */
+  .chart-area { height: 120px; }
+}
+
+@media (max-width: 480px) {
+  .pgrid { grid-template-columns: repeat(2, 1fr); }
+  .hero-title { font-size: 44px; }
+  .sgrid { grid-template-columns: repeat(2, 1fr); }
+  .inv-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ===================== STORE ===================== -->
+<div id="store-page">
+<nav class="snav">
+  <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">AUR<span>U</span>M</div>
+  <ul>
+    <li><a onclick="scrollSec()">Шинэ бараа</a></li>
+    <li><a onclick="scrollSec()">Брэндүүд</a></li>
+    <li><a onclick="scrollSec()">Эрэгтэй</a></li>
+    <li><a onclick="scrollSec()">Эмэгтэй</a></li>
+    <li><a onclick="openTrack()" style="color:var(--accent)">📦 Захиалга</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="adm-btn" onclick="goAdmin()"><i class="ti ti-layout-dashboard" style="font-size:14px"></i>Admin</button>
+    <div style="position:relative;cursor:pointer" onclick="openSearch()"><i class="ti ti-search" style="font-size:20px;color:var(--muted)"></i></div>
+    <div style="position:relative;cursor:pointer" onclick="openWishlist()"><i class="ti ti-heart" style="font-size:20px;color:var(--muted)"></i><span class="wl-num" id="wl-num" style="display:none">0</span></div>
+    <div class="cart-wrap" onclick="openCart()">
+      <i class="ti ti-shopping-bag"></i>
+      <div class="cart-num" id="cart-num">0</div>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-l">
+    <p class="eyebrow">SS 2026 Цуглуулга</p>
+    <h1 class="hero-title">WEAR<br>THE <em>NEW</em><br>LANGUAGE</h1>
+    <p class="hero-desc">Дэлхийн хамгийн нэр хүндтэй брэндүүдийн шилдэг бүтээгдэхүүн.</p>
+    <div class="hero-btns">
+      <button class="btn-gold" onclick="scrollSec()">Дэлгүүр хийх</button>
+      <button class="btn-ghost">Lookbook</button>
+    </div>
+  </div>
+  <div class="hero-r">
+    <div class="hero-bg">BALENCIAGA<br>OAKLEY<br>MARGIELA<br>BALENCIAGA<br>OAKLEY</div>
+    <div class="hero-tag">Онцлох бараа</div>
+  </div>
+</div>
+
+<!-- BRAND MARQUEE -->
+<div class="brand-marquee-wrap">
+  <div class="brand-marquee-track">
+    <div class="brand-marquee-inner" id="marquee-inner">
+
+      <!-- BALENCIAGA -->
+      <span class="bm-item">
+        <span class="bm-logo">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="2" y="8" width="22" height="4" rx="2" fill="currentColor"/>
+            <rect x="2" y="16" width="18" height="4" rx="2" fill="currentColor"/>
+            <rect x="2" y="24" width="22" height="4" rx="2" fill="currentColor"/>
+            <circle cx="28" cy="18" r="6" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          </svg>
+        </span>
+        <span class="bm-name">BALENCIAGA</span>
+      </span>
+
+      <!-- OAKLEY -->
+      <span class="bm-item">
+        <span class="bm-logo">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="18" cy="18" rx="14" ry="9" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <ellipse cx="18" cy="18" rx="7" ry="5" stroke="currentColor" stroke-width="2" fill="none"/>
+            <line x1="4" y1="18" x2="11" y2="18" stroke="currentColor" stroke-width="2"/>
+            <line x1="25" y1="18" x2="32" y2="18" stroke="currentColor" stroke-width="2"/>
+          </svg>
+        </span>
+        <span class="bm-name">OAKLEY</span>
+      </span>
+
+      <!-- MAISON MARGIELA -->
+      <span class="bm-item">
+        <span class="bm-logo">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="6" width="10" height="10" rx="1" fill="currentColor" opacity="0.9"/>
+            <rect x="20" y="6" width="10" height="10" rx="1" fill="currentColor" opacity="0.9"/>
+            <rect x="6" y="20" width="10" height="10" rx="1" fill="currentColor" opacity="0.9"/>
+            <rect x="20" y="20" width="10" height="10" rx="1" fill="currentColor" opacity="0.3"/>
+          </svg>
+        </span>
+        <span class="bm-name">MAISON MARGIELA</span>
+      </span>
+
+      <!-- GUCCI -->
+      <span class="bm-item">
+        <span class="bm-logo">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="18" r="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <circle cx="24" cy="18" r="8" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <rect x="18" y="14" width="8" height="4" fill="#0a0a0a"/>
+          </svg>
+        </span>
+        <span class="bm-name">GUCCI</span>
+      </span>
+
+      <!-- PRADA -->
+      <span class="bm-item">
+        <span class="bm-logo">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6 28 L6 8 L20 8 C26 8 30 11 30 16 C30 21 26 24 20 24 L6 24" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <line x1="6" y1="28" x2="14" y2="28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="bm-name">PRADA</span>
+      </span>
+
+      <!-- SAINT LAURENT -->
+      <span class="bm-item">
+        <span class="bm-logo">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <text x="3" y="22" font-family="Georgia,serif" font-size="22" font-style="italic" font-weight="700" fill="currentColor">YSL</text>
+          </svg>
+        </span>
+        <span class="bm-name">SAINT LAURENT</span>
+      </span>
+
+      <!-- BOTTEGA VENETA -->
+      <span class="bm-item">
+        <span class="bm-logo">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 10 C4 10 8 26 10 26 C12 26 14 10 14 10" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M13 10 C13 10 17 26 19 26 C21 26 23 10 23 10" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            <path d="M22 10 C22 10 26 26 28 26 C30 26 32 10 32 10" stroke="currentColor" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span class="bm-name">BOTTEGA VENETA</span>
+      </span>
+
+      <!-- OFF-WHITE -->
+      <span class="bm-item">
+        <span class="bm-logo">
+          <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="5" y="5" width="26" height="26" stroke="currentColor" stroke-width="2.5" fill="none"/>
+            <line x1="5" y1="5" x2="31" y2="31" stroke="currentColor" stroke-width="1.5"/>
+            <line x1="31" y1="5" x2="5" y2="31" stroke="currentColor" stroke-width="1.5"/>
+          </svg>
+        </span>
+        <span class="bm-name">OFF—WHITE</span>
+      </span>
+
+    </div>
+  </div>
+</div>
+
+<div class="brand-strip">
+  <div class="bp on" onclick="filterBrand('all',this)">Бүгд</div>
+  <div class="bp" onclick="filterBrand('balenciaga',this)">Balenciaga</div>
+  <div class="bp" onclick="filterBrand('oakley',this)">Oakley</div>
+  <div class="bp" onclick="filterBrand('margiela',this)">Maison Margiela</div>
+</div>
+
+<div class="section" id="prod-sec">
+  <h2 class="sec-title">Шинэ <span>Бараа</span></h2>
+  <div class="filters">
+    <button class="fp on" onclick="setCat('all',this)">Бүгд</button>
+    <button class="fp" onclick="setCat('footwear',this)">Гутал</button>
+    <button class="fp" onclick="setCat('outerwear',this)">Хувцас</button>
+    <button class="fp" onclick="setCat('accessories',this)">Аксессуар</button>
+    <button class="fp" onclick="setCat('eyewear',this)">Нүдний шил</button>
+  </div>
+  <div class="pgrid" id="pgrid"></div>
+</div>
+
+<div class="banner">
+  <div>
+    <h2>Үнэгүй хүргэлт<br><span>₮500,000-аас дээш</span></h2>
+    <p>Улаанбаатарт 1–2 хоногт, орон нутагт 3–5 хоногт. 30 хоногийн дотор буцааж авна.</p>
+  </div>
+  <button class="btn-gold" onclick="scrollSec()">Дэлгүүрлэх</button>
+</div>
+
+<footer>
+  <div class="flogo">AUR<span>U</span>M</div>
+  <div class="flinks">
+    <a onclick="openAbout()">Бидний тухай</a><a onclick="openFaq()">FAQ</a><a>Хүргэлт</a><a>Буцаалт</a><a onclick="openTrack()">Захиалга шалгах</a><a onclick="openAbout();setTimeout(()=>document.getElementById('contact-section').scrollIntoView({behavior:'smooth'}),100)">Холбоо барих</a>
+    <a class="gold" onclick="goAdmin()">Admin панел</a>
+  </div>
+  <p class="fcopy">© 2026 AURUM</p>
+</footer>
+<!-- PRODUCT DETAIL MODAL -->
+<div class="pd-mov" id="pd-modal">
+  <div class="pd-modal">
+    <div class="pd-imgs" id="pd-imgs">
+      <button class="pd-close" onclick="closePD()"><i class="ti ti-x"></i></button>
+      <div id="pd-main-img"></div>
+      <div class="pd-img-thumbs" id="pd-thumbs"></div>
+    </div>
+    <div class="pd-info">
+      <div class="pd-brand" id="pd-brand"></div>
+      <div class="pd-name" id="pd-name"></div>
+      <div class="pd-price" id="pd-price"></div>
+      <div class="pd-desc" id="pd-desc"></div>
+      <div id="pd-sizes-wrap" style="display:none">
+        <div class="pd-opt-label">Хэмжээ сонгох</div>
+        <div class="size-opts" id="pd-sizes"></div>
+      </div>
+      <div id="pd-colors-wrap" style="display:none">
+        <div class="pd-opt-label" style="margin-top:12px">Өнгө сонгох</div>
+        <div class="size-opts" id="pd-colors"></div>
+      </div>
+      <div style="margin-top:auto;padding-top:20px">
+        <button class="btn-gold" style="width:100%;padding:14px" onclick="addCartFromPD()">Сагсанд нэмэх</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="search-overlay">
+  <button onclick="closeSearch()" style="position:absolute;top:24px;right:24px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:28px"><i class="ti ti-x"></i></button>
+  <div class="search-input-wrap">
+    <i class="ti ti-search"></i>
+    <input class="search-input" id="search-input" placeholder="Бараа, брэнд хайх..." oninput="doSearch(this.value)" autofocus>
+  </div>
+  <div class="search-results" id="search-results">
+    <p class="search-empty">Хайх үгээ оруулна уу...</p>
+  </div>
+</div>
+
+</div><!-- /store-page -->
+
+<!-- ABOUT PAGE -->
+<div id="about-page" class="about-page">
+  <nav class="snav">
+    <div class="logo" onclick="closeAbout()">AUR<span>U</span>M</div>
+    <ul>
+      <li><a onclick="closeAbout();setTimeout(scrollSec,100)">Дэлгүүр</a></li>
+      <li><a onclick="closeAbout()">Нүүр</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="adm-btn" onclick="goAdmin()"><i class="ti ti-layout-dashboard" style="font-size:14px"></i>Admin</button>
+      <div class="cart-wrap" onclick="openCart()">
+        <i class="ti ti-shopping-bag"></i>
+        <div class="cart-num" id="cart-num2">0</div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <div class="about-hero">
+    <div class="about-hero-inner">
+      <p class="about-tag">Бидний тухай</p>
+      <h1 class="about-h1">LUXURY-ГАА<br><span>МОНГОЛД</span><br>АВЧРАНА</h1>
+      <p class="about-lead" id="about-lead-text">AURUM нь дэлхийн тэргүүлэх luxury брэндүүдийг Монголын зах зээлд хүргэдэг найдвартай платформ юм. Бид зөвхөн баталгаат, жинхэнэ бүтээгдэхүүн борлуулдаг.</p>
+    </div>
+  </div>
+
+  <!-- About + Values -->
+  <div class="about-body">
+    <!-- Left: Story -->
+    <div>
+      <h2 class="about-section-title">Бидний <span>түүх</span></h2>
+      <p class="about-text" id="about-story1">AURUM 2020 онд Улаанбаатар хотод байгуулагдсан. Монголын хэрэглэгчдэд дэлхийн шилдэг загварын брэндүүдийг хялбар, найдвартай, хурдан хүргэх зорилготой.</p>
+      <p class="about-text" id="about-story2">Бид Balenciaga, Maison Margiela, Oakley зэрэг тэргүүлэх брэндүүдийн албан ёсны дистрибьютор бөгөөд бүх бараа нь 100% жинхэнэ, баталгаатай.</p>
+      <p class="about-text" id="about-story3">Манай баг 50+ орны брэнд, 1,000 гаруй бүтээгдэхүүнтэй ажиллаж, 5,000+ хэрэглэгчдэд үйлчилсэн туршлагатай.</p>
+    </div>
+    <!-- Right: Values -->
+    <div>
+      <h2 class="about-section-title">Бидний <span>үнэт зүйлс</span></h2>
+      <div class="about-values">
+        <div class="about-val">
+          <div class="about-val-icon"><i class="ti ti-certificate"></i></div>
+          <div><div class="about-val-title">100% Жинхэнэ бараа</div><div class="about-val-text">Бид зөвхөн баталгаат, жинхэнэ бүтээгдэхүүн зардаг. Хуурамч байвал бүтэн үнэд буцааж авна.</div></div>
+        </div>
+        <div class="about-val">
+          <div class="about-val-icon"><i class="ti ti-truck-delivery"></i></div>
+          <div><div class="about-val-title">Хурдан хүргэлт</div><div class="about-val-text">Улаанбаатарт 1–2 хоногт, орон нутагт 3–5 хоногт хүргэнэ. ₮500,000-аас дээш захиалгад үнэгүй.</div></div>
+        </div>
+        <div class="about-val">
+          <div class="about-val-icon"><i class="ti ti-refresh"></i></div>
+          <div><div class="about-val-title">30 хоногийн буцаалт</div><div class="about-val-text">Бүтээгдэхүүн таалагдаагүй эсвэл гэмтэлтэй ирвэл 30 хоногийн дотор буцааж авна.</div></div>
+        </div>
+        <div class="about-val">
+          <div class="about-val-icon"><i class="ti ti-headset"></i></div>
+          <div><div class="about-val-title">24/7 Дэмжлэг</div><div class="about-val-text">Манай хэрэглэгчийн үйлчилгээний баг таны асуултад үргэлж хариулахад бэлэн байна.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="about-divider">
+
+  <!-- Contact section -->
+  <div id="contact-section" style="padding:72px 80px;">
+    <h2 class="about-section-title" style="margin-bottom:28px">Холбоо <span>барих</span></h2>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <div class="contact-card-icon"><i class="ti ti-phone"></i></div>
+        <div><div class="contact-card-label">Утас</div><div class="contact-card-val" id="about-phone">+976 7711 0000</div></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon"><i class="ti ti-map-pin"></i></div>
+        <div><div class="contact-card-label">Хаяг</div><div class="contact-card-val" id="about-address">Сүхбаатар дүүрэг, Энхтайвны өргөн чөлөө 5</div></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon"><i class="ti ti-mail"></i></div>
+        <div><div class="contact-card-label">Имэйл</div><div class="contact-card-val" id="about-email">info@aurum.mn</div></div>
+      </div>
+      <div class="contact-card">
+        <div class="contact-card-icon"><i class="ti ti-clock"></i></div>
+        <div><div class="contact-card-label">Ажлын цаг</div><div class="contact-card-val">Даваа–Баасан: 09:00–18:00</div></div>
+      </div>
+    </div>
+
+    <!-- Contact form -->
+    <div class="contact-form">
+      <div class="contact-form-title">Бидэнд мэдэгдэл илгээх</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+        <div><label class="flabel">Нэр</label><input class="fi" id="cf-name" placeholder="Таны нэр" type="text"></div>
+        <div><label class="flabel">Утас / Имэйл</label><input class="fi" id="cf-contact" placeholder="9911 2233" type="text"></div>
+      </div>
+      <div style="margin-bottom:14px"><label class="flabel">Агуулга</label><textarea class="fi" id="cf-msg" placeholder="Таны асуулт, санал, гомдол..." style="resize:vertical;min-height:100px"></textarea></div>
+      <button class="btn-gold" onclick="sendContact()">Илгээх</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="flogo">AUR<span>U</span>M</div>
+    <div class="flinks">
+      <a onclick="closeAbout()">Нүүр хуудас</a>
+      <a onclick="closeAbout();setTimeout(scrollSec,100)">Дэлгүүр</a>
+    </div>
+    <p class="fcopy">© 2026 AURUM</p>
+  </footer>
+</div>
+
+<!-- CART -->
+<div class="scrim" id="scrim" onclick="closeCart()"></div>
+<div class="drawer" id="drawer">
+  <div class="drw-head">
+    <span class="drw-title">Миний сагс</span>
+    <button class="ico-btn" onclick="closeCart()"><i class="ti ti-x"></i></button>
+  </div>
+  <div class="drw-body" id="drw-body">
+    <div class="empty-cart"><i class="ti ti-shopping-bag"></i><p>Сагс хоосон байна</p></div>
+  </div>
+  <div class="drw-foot" id="drw-foot" style="display:none">
+    <div class="tot-row"><span class="tot-label">Нийт дүн</span><span class="tot-val" id="drw-total">₮0</span></div>
+    <p class="free-note" id="free-note"></p>
+    <button class="checkout-btn" onclick="openCheckout()">Захиалга өгөх →</button>
+  </div>
+</div>
+
+<!-- CHECKOUT -->
+<div class="co-wrap" id="co-wrap">
+  <div class="co-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:18px 26px;border-bottom:.5px solid var(--border);">
+      <div class="flogo" style="font-size:18px">AUR<span>U</span>M</div>
+      <button class="ico-btn" onclick="closeCheckout()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="steps-bar" id="sbr">
+      <div class="step-tab act" id="st1"><div class="snum">1</div>Мэдээлэл</div>
+      <div class="step-tab" id="st2"><div class="snum">2</div>Хүргэлт</div>
+      <div class="step-tab" id="st3"><div class="snum">3</div>Төлбөр</div>
+    </div>
+    <div class="co-inner" id="co-inner">
+      <div class="co-form">
+        <div id="s1">
+          <p class="co-stl">Хүлээн авагчийн мэдээлэл</p>
+          <div class="row2">
+            <div><label class="flabel">Овог</label><input class="fi" id="f-ln" placeholder="Батболд" type="text"></div>
+            <div><label class="flabel">Нэр</label><input class="fi" id="f-fn" placeholder="Мөнхбаяр" type="text"></div>
+          </div>
+          <div class="fg"><label class="flabel">Утас</label><input class="fi" id="f-ph" placeholder="9911 2233" type="tel"></div>
+          <div class="fg"><label class="flabel">Имэйл</label><input class="fi" id="f-em" placeholder="email@example.com" type="email"></div>
+          <div class="fg"><label class="flabel">Дүүрэг / Аймаг</label>
+            <select class="fsel" id="f-di">
+              <option value="">— Сонгох —</option>
+              <option>Хан-Уул дүүрэг</option><option>Баянгол дүүрэг</option>
+              <option>Сүхбаатар дүүрэг</option><option>Чингэлтэй дүүрэг</option>
+              <option>Баянзүрх дүүрэг</option><option>Сонгинохайрхан дүүрэг</option>
+              <option>Налайх дүүрэг</option><option>Орон нутаг (аймаг)</option>
+            </select>
+          </div>
+          <div class="fg"><label class="flabel">Дэлгэрэнгүй хаяг</label><input class="fi" id="f-ad" placeholder="Хороо, байр, орц, тоот" type="text"></div>
+        </div>
+        <div id="s2" style="display:none">
+          <p class="co-stl">Хүргэлтийн сонголт</p>
+          <div class="dopt on" onclick="setDel(this,10000)"><div class="dopt-icon"><i class="ti ti-truck"></i></div><div><div class="dopt-name">Стандарт хүргэлт</div><div class="dopt-sub">УБ: 1–2 хоног • Орон нутаг: 3–5 хоног • ₮10,000</div></div></div>
+          <div class="dopt" onclick="setDel(this,25000)"><div class="dopt-icon"><i class="ti ti-rocket"></i></div><div><div class="dopt-name">Яаралтай хүргэлт</div><div class="dopt-sub">УБ дотор: өнөөдөр / маргааш • ₮25,000</div></div></div>
+          <div class="dopt" onclick="setDel(this,0)"><div class="dopt-icon"><i class="ti ti-map-pin"></i></div><div><div class="dopt-name">Өөрөө авах</div><div class="dopt-sub">Сүхбаатар дүүрэг, Энхтайвны өргөн чөлөө 5 • Үнэгүй</div></div></div>
+        </div>
+        <div id="s3" style="display:none">
+          <p class="co-stl">Банкны шилжүүлэг</p>
+          <div class="bank-box">
+            <div class="bank-lbl">Дансны мэдээлэл</div>
+            <div class="brow"><span class="bkey">Банк</span><span class="bval" id="co-bank-name">—</span></div>
+            <div class="brow"><span class="bkey">Дансны нэр</span><span class="bval" id="co-acc-name">—</span></div>
+            <div class="brow"><span class="bkey">Дансны дугаар</span><span class="bval"><span id="co-acc-num">—</span> <button class="cbtn" onclick="doCopy(document.getElementById('co-acc-num').textContent,this)">Хуулах</button></span></div>
+            <div class="brow"><span class="bkey">Шилжүүлэх дүн</span><span class="bval" id="bamt" style="color:var(--accent);font-family:'Bebas Neue',sans-serif;font-size:18px">₮0</span></div>
+            <div class="brow"><span class="bkey">Гүйлгээний утга</span><span class="bval"><span id="bref">—</span> <button class="cbtn" onclick="doCopy(bankRef,this)">Хуулах</button></span></div>
+          </div>
+          <p class="bank-note">⚠ Гүйлгээний утга <b id="bref2">—</b>-г заавал бичнэ үү.<br>Шилжүүлсний дараа <b>15–30 минут</b>-ын дотор баталгаажна.<br>Лавлах: <b id="co-phone">—</b></p>
+        </div>
+      </div>
+      <div class="co-aside">
+        <div class="co-stl">Захиалга</div>
+        <div id="sum-items"></div>
+        <hr class="sum-div">
+        <div class="sum-del-row"><span>Хүргэлт</span><span id="sum-del">₮10,000</span></div>
+        <div class="sum-tot"><span class="sum-tot-lbl">Нийт</span><span class="sum-tot-val" id="sum-total">₮0</span></div>
+      </div>
+    </div>
+    <div class="co-foot" id="co-foot">
+      <button class="btn-bk" id="co-bk" onclick="coBack()" style="visibility:hidden">← Буцах</button>
+      <button class="btn-nx" id="co-nx" onclick="coNext()">Үргэлжлүүлэх →</button>
+    </div>
+    <div class="co-ok" id="co-ok">
+      <div class="ok-icon"><i class="ti ti-check"></i></div>
+      <div class="ok-title">Захиалга амжилттай!</div>
+      <p class="ok-sub">Банкны шилжүүлэг хийсний дараа мэдэгдэл илгээгдэнэ.</p>
+      <div class="ok-num">Захиалгын дугаар: <span id="ok-num">—</span></div>
+      <div style="background:var(--surface2);border:.5px solid var(--border);padding:14px 20px;font-size:12px;color:var(--muted);line-height:1.7;max-width:320px;text-align:left">
+        Данс: <b style="color:var(--white)" id="ok-accnum">—</b> (<span id="ok-bank">—</span>)<br>
+        Гүйлгээний утга: <b style="color:var(--accent)" id="ok-ref">—</b>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+        <button class="btn-gold" onclick="openTrackFromCheckout()">📦 Захиалга шалгах</button>
+        <button class="btn-ghost" onclick="closeCheckout()">Нүүр хуудас руу буцах</button>
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-top:8px">Захиалгын дугаараа хадгалаарай — статусаа шалгахад хэрэгтэй</p>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ PAGE -->
+<div id="faq-page" class="faq-page">
+  <nav class="snav">
+    <div class="logo" onclick="closeFaq()">AUR<span>U</span>M</div>
+    <ul>
+      <li><a onclick="closeFaq();setTimeout(scrollSec,100)">Дэлгүүр</a></li>
+      <li><a onclick="openAbout()">Бидний тухай</a></li>
+    </ul>
+    <div class="nav-right">
+      <button class="adm-btn" onclick="goAdmin()"><i class="ti ti-layout-dashboard" style="font-size:14px"></i>Admin</button>
+      <div class="cart-wrap" onclick="openCart()">
+        <i class="ti ti-shopping-bag"></i>
+        <div class="cart-num" id="cart-num3">0</div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="faq-hero">
+    <p class="faq-hero-tag">Тусламж & Мэдээлэл</p>
+    <h1>Түгээмэл асуулт<br><span>хариулт</span></h1>
+    <p>Хэрэв доорх хариулт таны асуултад хангалтгүй бол "Холбоо барих" хуудсаар бидэнтэй холбогдоорой.</p>
+  </div>
+
+  <div class="faq-body">
+    <div class="faq-cats" id="faq-cats">
+      <button class="faq-cat on" onclick="filterFaq('all',this)">Бүгд</button>
+    </div>
+    <div class="faq-list" id="faq-list">
+      <div class="faq-empty"><i class="ti ti-help"></i>Admin-аас FAQ асуулт нэмнэ үү</div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="flogo">AUR<span>U</span>M</div>
+    <div class="flinks">
+      <a onclick="closeFaq()">Нүүр хуудас</a>
+      <a onclick="openAbout()">Бидний тухай</a>
+      <a onclick="openAbout();setTimeout(()=>document.getElementById('contact-section').scrollIntoView({behavior:'smooth'}),100)">Холбоо барих</a>
+    </div>
+    <p class="fcopy">© 2026 AURUM</p>
+  </footer>
+</div>
+
+<!-- TRACK ORDER PAGE -->
+<div id="track-page" class="track-page">
+  <nav class="snav">
+    <div class="logo" onclick="closeTrack()">AUR<span>U</span>M</div>
+    <ul><li><a onclick="closeTrack()">Нүүр</a></li></ul>
+    <div class="nav-right">
+      <div class="cart-wrap" onclick="openCart()"><i class="ti ti-shopping-bag"></i><div class="cart-num" id="cart-num4">0</div></div>
+    </div>
+  </nav>
+  <div class="track-hero">
+    <p class="faq-hero-tag">Захиалгын мэдээлэл</p>
+    <h1 style="font-family:'Bebas Neue',sans-serif;font-size:64px;letter-spacing:2px;line-height:.95;margin-bottom:18px">ЗАХИАЛГА <span style="color:var(--accent)">ШАЛГАХ</span></h1>
+    <p style="font-size:14px;color:var(--muted);max-width:520px;line-height:1.7">Захиалгын дугаараа оруулж захиалгынхаа статусыг шалгана уу.</p>
+  </div>
+  <div class="track-body">
+    <div class="track-input-wrap">
+      <input class="track-input" id="track-input" placeholder="Захиалгын дугаар (жишээ: AUR-2026-XXXX)" type="text" onkeydown="if(event.key==='Enter')trackOrder()">
+      <button class="btn-gold" onclick="trackOrder()" style="padding:14px 28px;white-space:nowrap">Хайх</button>
+    </div>
+    <div id="track-result"></div>
+  </div>
+  <footer>
+    <div class="flogo">AUR<span>U</span>M</div>
+    <div class="flinks"><a onclick="closeTrack()">Нүүр хуудас</a></div>
+    <p class="fcopy">© 2026 AURUM</p>
+  </footer>
+</div>
+
+<div id="admin-page">
+  <div class="sidebar">
+    <div class="sb-logo">AUR<span>U</span>M<small>Admin Panel</small></div>
+    <div class="sb-nav">
+      <div class="sb-sec">Үндсэн</div>
+      <div class="nitem on" id="ni-dashboard" onclick="goAdmPage('dashboard')"><i class="ti ti-layout-dashboard"></i><span>Dashboard</span></div>
+      <div class="nitem" id="ni-orders" onclick="goAdmPage('orders')"><i class="ti ti-shopping-cart"></i><span>Захиалга</span><span class="nb" id="order-count">0</span></div>
+      <div class="nitem" id="ni-products" onclick="goAdmPage('products')"><i class="ti ti-hanger"></i><span>Бүтээгдэхүүн</span></div>
+      <div class="nitem" id="ni-inventory" onclick="goAdmPage('inventory')"><i class="ti ti-box"></i><span>Нөөц</span></div>
+      <div class="sb-sec">Удирдлага</div>
+      <div class="nitem" id="ni-customers" onclick="goAdmPage('customers')"><i class="ti ti-users"></i><span>Хэрэглэгчид</span></div>
+      <div class="nitem" id="ni-faq" onclick="goAdmPage('faq')"><i class="ti ti-help-circle"></i><span>FAQ</span></div>
+      <div class="sb-sec">Тохиргоо</div>
+      <div class="nitem" id="ni-settings" onclick="goAdmPage('settings')"><i class="ti ti-settings"></i><span>Тохиргоо</span></div>
+    </div>
+    <div class="sb-foot">
+      <button class="back-store" onclick="goStore()"><i class="ti ti-arrow-left" style="font-size:15px"></i><span>Дэлгүүрт буцах</span></button>
+      <button class="back-store" onclick="adminLogout()" style="color:var(--red);border-bottom-color:rgba(217,79,79,0.2);margin-bottom:12px"><i class="ti ti-logout" style="font-size:15px"></i><span>Гарах (Logout)</span></button>
+      <div class="adm-prof">
+        <div class="adm-av">A</div>
+        <div><div style="font-size:13px;font-weight:500">Admin</div><div style="font-size:11px;color:var(--muted)">Super Admin</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-area">
+    <div class="topbar">
+      <div class="tb-l"><h1 id="adm-ttl">Dashboard</h1><p id="adm-sub">Дэлгүүрийн ерөнхий тоймыг харна уу</p></div>
+      <div class="tb-r">
+        <button class="store-view-btn" onclick="goStore()"><i class="ti ti-external-link" style="font-size:13px"></i>Дэлгүүр харах</button>
+        <button class="tb-btn" onclick="openAddModal()"><i class="ti ti-plus" style="font-size:13px"></i>Бараа нэмэх</button>
+        <div class="ib" onclick="adminLogout()" title="Гарах" style="border-color:rgba(217,79,79,0.3)"><i class="ti ti-logout" style="font-size:17px;color:var(--red)"></i></div>
+        <div class="ib"><i class="ti ti-bell" style="font-size:17px"></i><div class="ndot"></div></div>
+      </div>
+    </div>
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div class="ap on" id="ap-dashboard">
+        <div class="sgrid">
+          <div class="stat"><div class="stat-top"><span class="stat-lbl">Нийт орлого</span><div class="stat-ico sa"><i class="ti ti-currency-tugrik"></i></div></div><div class="stat-val" id="d-revenue">₮0</div><div class="stat-ch up" id="d-rev-note" style="color:var(--muted)">Одоохондоо захиалга алга</div></div>
+          <div class="stat"><div class="stat-top"><span class="stat-lbl">Захиалга</span><div class="stat-ico sg"><i class="ti ti-shopping-bag"></i></div></div><div class="stat-val" id="d-orders">0</div><div class="stat-ch" id="d-ord-note" style="color:var(--muted)">Нийт захиалга</div></div>
+          <div class="stat"><div class="stat-top"><span class="stat-lbl">Бүтээгдэхүүн</span><div class="stat-ico sb2"><i class="ti ti-hanger"></i></div></div><div class="stat-val" id="d-prods">0</div><div class="stat-ch" style="color:var(--muted)">Нийт бараа</div></div>
+          <div class="stat"><div class="stat-top"><span class="stat-lbl">Хэрэглэгчид</span><div class="stat-ico sr"><i class="ti ti-users"></i></div></div><div class="stat-val" id="d-customers">0</div><div class="stat-ch" style="color:var(--muted)">Нийт хэрэглэгч</div></div>
+        </div>
+        <div class="panel" style="margin-bottom:18px">
+          <div class="ph"><span class="pt">Борлуулалтын график</span><span class="ps" id="chart-period-label">Сүүлийн 7 өдөр</span></div>
+          <div style="padding:20px">
+            <div class="chart-bars" id="sales-chart">
+              <p style="color:var(--muted);font-size:13px">Захиалга ирэхэд график харагдана</p>
+            </div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="ph"><span class="pt">Сүүлийн захиалгууд</span></div>
+          <div id="dash-orders-body">
+            <div class="empty-table"><i class="ti ti-shopping-cart"></i>Одоохондоо захиалга алга</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ORDERS -->
+      <div class="ap" id="ap-orders">
+        <div class="ch"><h2>Захиалгууд</h2></div>
+        <div class="panel">
+          <div id="orders-body">
+            <div class="empty-table"><i class="ti ti-shopping-cart"></i>Одоохондоо захиалга алга</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PRODUCTS -->
+      <div class="ap" id="ap-products">
+        <div class="ch"><h2>Бүтээгдэхүүн</h2><button class="tb-btn" onclick="openAddModal()"><i class="ti ti-plus" style="font-size:13px"></i>Бараа нэмэх</button></div>
+        <div class="panel">
+          <div id="products-body">
+            <div class="empty-table"><i class="ti ti-hanger"></i>Одоохондоо бараа алга. "Бараа нэмэх" товч дарна уу.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- INVENTORY -->
+      <div class="ap" id="ap-inventory">
+        <div class="ch"><h2>Нөөцийн байдал</h2></div>
+        <div class="inv-grid" id="inv-body">
+          <div style="grid-column:1/-1" class="empty-table"><i class="ti ti-box"></i>Бараа нэмсний дараа нөөц харагдана</div>
+        </div>
+      </div>
+
+      <!-- CUSTOMERS -->
+      <div class="ap" id="ap-customers">
+        <div class="ch"><h2>Хэрэглэгчид</h2></div>
+        <div class="panel">
+          <div id="customers-body">
+            <div class="empty-table"><i class="ti ti-users"></i>Захиалга хийсний дараа хэрэглэгчид харагдана</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FAQ MANAGEMENT -->
+      <div class="ap" id="ap-faq">
+        <div class="ch">
+          <h2>FAQ Удирдлага</h2>
+          <button class="tb-btn" onclick="openFaqModal()"><i class="ti ti-plus" style="font-size:13px"></i>Асуулт нэмэх</button>
+        </div>
+        <div class="panel" id="faq-admin-panel">
+          <div class="empty-table"><i class="ti ti-help"></i>Одоохондоо FAQ алга. "Асуулт нэмэх" товч дарна уу.</div>
+        </div>
+      </div>
+
+      <!-- SETTINGS -->
+      <div class="ap" id="ap-settings">
+        <div class="ch"><h2>Тохиргоо</h2></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+          <div class="panel"><div class="ph"><span class="pt">Дэлгүүрийн мэдээлэл</span></div>
+            <div style="padding:20px;display:flex;flex-direction:column;gap:13px">
+              <div><label class="ml">Дэлгүүрийн нэр</label><input class="mi" id="set-storename" value="AURUM ХХК" type="text"></div>
+              <div><label class="ml">Мөнгөн тэмдэгт</label><select class="ms"><option>MNT (₮)</option></select></div>
+              <div><label class="ml">Холбоо барих утас</label><input class="mi" id="set-phone" value="+976 7711 0000" type="text"></div>
+              <button class="tb-btn" style="align-self:flex-start" onclick="saveSettings()">Хадгалах</button>
+            </div>
+          </div>
+          <div class="panel"><div class="ph"><span class="pt">Банкны мэдээлэл</span></div>
+            <div style="padding:20px;display:flex;flex-direction:column;gap:13px">
+              <div><label class="ml">Банк</label><input class="mi" id="set-bank" value="Хаан банк" type="text"></div>
+              <div><label class="ml">Дансны нэр</label><input class="mi" id="set-accname" value="AURUM ХХК" type="text"></div>
+              <div><label class="ml">Дансны дугаар</label><input class="mi" id="set-accnum" value="5000112233" type="text"></div>
+              <button class="tb-btn" style="align-self:flex-start" onclick="saveSettings()">Хадгалах</button>
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
+          <!-- PASSWORD CHANGE -->
+          <div class="panel"><div class="ph"><span class="pt">Нууц үг өөрчлөх</span></div>
+            <div style="padding:20px;display:flex;flex-direction:column;gap:13px">
+              <div><label class="ml">Одоогийн нууц үг</label><input class="mi" id="set-oldpass" type="password" placeholder="••••••••"></div>
+              <div><label class="ml">Шинэ нууц үг</label><input class="mi" id="set-newpass" type="password" placeholder="••••••••"></div>
+              <div><label class="ml">Шинэ нууц үг давтах</label><input class="mi" id="set-newpass2" type="password" placeholder="••••••••"></div>
+              <button class="tb-btn" style="align-self:flex-start" onclick="changePassword()">Нууц үг өөрчлөх</button>
+            </div>
+          </div>
+          <!-- USERNAME -->
+          <div class="panel"><div class="ph"><span class="pt">Нэвтрэх мэдээлэл</span></div>
+            <div style="padding:20px;display:flex;flex-direction:column;gap:13px">
+              <div><label class="ml">Нэвтрэх нэр</label><input class="mi" id="set-username" type="text" placeholder="admin"></div>
+              <div style="background:var(--surface2);border:.5px solid var(--border);padding:14px;font-size:12px;color:var(--muted);line-height:1.7">
+                <i class="ti ti-info-circle" style="font-size:14px;vertical-align:-2px;margin-right:6px"></i>
+                Admin хуудсанд зөвхөн эрх бүхий хүн нэвтрэх ёстой. Нэвтрэх нэр, нууц үгийг нууцалж хадгалаарай.
+              </div>
+              <button class="tb-btn" style="align-self:flex-start" onclick="saveUsername()">Хадгалах</button>
+            </div>
+          </div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px">
+          <!-- ABOUT INFO -->
+          <div class="panel"><div class="ph"><span class="pt">Бидний тухай — Мэдээлэл</span></div>
+            <div style="padding:20px;display:flex;flex-direction:column;gap:13px">
+              <div><label class="ml">Хаяг</label><input class="mi" id="set-address" value="Сүхбаатар дүүрэг, Энхтайвны өргөн чөлөө 5" type="text"></div>
+              <div><label class="ml">Имэйл</label><input class="mi" id="set-email" value="info@aurum.mn" type="text"></div>
+              <div><label class="ml">Товч танилцуулга</label><textarea class="mta" id="set-about" style="min-height:80px">AURUM нь дэлхийн тэргүүлэх luxury брэндүүдийг Монголын зах зээлд хүргэдэг найдвартай платформ юм.</textarea></div>
+              <button class="tb-btn" style="align-self:flex-start" onclick="saveSettings()">Хадгалах</button>
+            </div>
+          </div>
+          <!-- ABOUT STORY -->
+          <div class="panel"><div class="ph"><span class="pt">Бидний тухай — Түүх</span></div>
+            <div style="padding:20px;display:flex;flex-direction:column;gap:13px">
+              <div><label class="ml">1-р параграф</label><textarea class="mta" id="set-story1" style="min-height:68px">AURUM 2020 онд Улаанбаатар хотод байгуулагдсан.</textarea></div>
+              <div><label class="ml">2-р параграф</label><textarea class="mta" id="set-story2" style="min-height:68px">Бид Balenciaga, Maison Margiela, Oakley зэрэг тэргүүлэх брэндүүдийн баталгаат дистрибьютор.</textarea></div>
+              <button class="tb-btn" style="align-self:flex-start" onclick="saveSettings()">Хадгалах</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div><!-- /admin -->
+
+<!-- FAQ MODAL -->
+<div class="mov" id="faq-modal">
+  <div class="modal" style="max-width:500px">
+    <div class="mh">
+      <span class="mt2" id="faq-modal-title">FAQ Асуулт нэмэх</span>
+      <button class="mc" onclick="closeFaqModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="mb">
+      <div class="mg"><label class="ml">Ангилал</label>
+        <select class="ms" id="faq-cat-input">
+          <option value="Захиалга">Захиалга</option>
+          <option value="Хүргэлт">Хүргэлт</option>
+          <option value="Буцаалт">Буцаалт</option>
+          <option value="Төлбөр">Төлбөр</option>
+          <option value="Бүтээгдэхүүн">Бүтээгдэхүүн</option>
+          <option value="Бусад">Бусад</option>
+        </select>
+      </div>
+      <div class="mg"><label class="ml">Асуулт *</label><input class="mi" id="faq-q-input" placeholder="Жишээ: Хэдэн хоногт хүргэх вэ?" type="text"></div>
+      <div class="mg"><label class="ml">Хариулт *</label><textarea class="mta" id="faq-a-input" placeholder="Дэлгэрэнгүй хариулт бичнэ үү..." style="min-height:100px"></textarea></div>
+    </div>
+    <div class="mf">
+      <button class="btn-cancel" onclick="closeFaqModal()">Болих</button>
+      <button class="tb-btn" onclick="saveFaq()"><i class="ti ti-check" style="font-size:13px"></i>Хадгалах</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN LOGIN MODAL -->
+<div class="mov" id="login-modal" style="background:rgba(0,0,0,0.92)">
+  <div class="modal" style="max-width:400px;border-color:rgba(200,169,110,0.2)">
+    <div style="padding:36px 32px 28px;text-align:center;border-bottom:.5px solid var(--border)">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:4px;margin-bottom:6px">AUR<span style="color:var(--accent)">U</span>M</div>
+      <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--muted)">Admin Panel</div>
+    </div>
+    <div style="padding:28px 32px">
+      <div style="margin-bottom:16px">
+        <label class="ml">Нэвтрэх нэр</label>
+        <input class="mi" id="login-user" placeholder="admin" type="text" autocomplete="username" onkeydown="if(event.key==='Enter')loginSubmit()">
+      </div>
+      <div style="margin-bottom:8px">
+        <label class="ml">Нууц үг</label>
+        <div style="position:relative">
+          <input class="mi" id="login-pass" placeholder="••••••••" type="password" autocomplete="current-password" onkeydown="if(event.key==='Enter')loginSubmit()" style="padding-right:44px">
+          <button onclick="togglePassVis()" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;padding:0" id="pass-eye"><i class="ti ti-eye"></i></button>
+        </div>
+      </div>
+      <div id="login-err" style="font-size:12px;color:var(--red);min-height:18px;margin-bottom:14px;display:none">Нэвтрэх нэр эсвэл нууц үг буруу байна</div>
+      <button class="btn-gold" onclick="loginSubmit()" style="width:100%;padding:13px;font-size:12px;letter-spacing:2px">Нэвтрэх</button>
+    </div>
+    <div style="padding:0 32px 24px;text-align:center">
+      <div style="font-size:11px;color:var(--muted)">Анхны нэвтрэх: <span style="color:var(--white)">admin</span> / <span style="color:var(--white)">aurum2026</span></div>
+      <div style="font-size:10px;color:var(--muted);margin-top:6px;opacity:.6">Тохиргоо → Нууц үг өөрчлөх</div>
+    </div>
+  </div>
+</div>
+
+<!-- ADD PRODUCT MODAL -->
+<div class="mov" id="add-modal">
+  <div class="modal">
+    <div class="mh"><span class="mt2">Шинэ бараа нэмэх</span><button class="mc" onclick="closeAddModal()"><i class="ti ti-x"></i></button></div>
+    <div class="mb">
+      <!-- Image upload -->
+      <div class="mg"><label class="ml">Барааны зурагнууд (max 5)</label>
+        <div class="multi-img-upload">
+          <div class="img-thumbs" id="img-thumbs">
+            <div class="img-add-btn" onclick="document.getElementById('m-img').click()">
+              <i class="ti ti-plus" style="font-size:20px;opacity:.4"></i>
+              <div style="font-size:10px;color:var(--muted);margin-top:4px">Нэмэх</div>
+            </div>
+          </div>
+          <input type="file" id="m-img" accept="image/*" multiple style="display:none" onchange="previewImgs(this.files)">
+          <div style="font-size:10px;color:var(--muted);margin-top:6px">JPG, PNG, WEBP · Эхний зураг нүүр зураг болно</div>
+        </div>
+      </div>
+      <div class="mr2">
+        <div><label class="ml">Барааны нэр *</label><input class="mi" id="m-name" placeholder="Жишээ: Air Force 1" type="text"></div>
+        <div><label class="ml">Брэнд *</label><select class="ms" id="m-brand">
+          <option>Balenciaga</option><option>Oakley</option><option>Maison Margiela</option>
+          <option>Nike</option><option>Adidas</option><option>Gucci</option><option>Бусад</option>
+        </select></div>
+      </div>
+      <div class="mr2">
+        <div><label class="ml">Ангилал *</label><select class="ms" id="m-cat">
+          <option value="footwear">Гутал</option>
+          <option value="outerwear">Хувцас</option>
+          <option value="accessories">Аксессуар</option>
+          <option value="eyewear">Нүдний шил</option>
+        </select></div>
+        <div><label class="ml">Үнэ (₮) *</label><input class="mi" id="m-price" placeholder="1,500,000" type="number" min="0"></div>
+      </div>
+      <div class="mr2">
+        <div><label class="ml">Нөөц (ширхэг)</label><input class="mi" id="m-stock" placeholder="10" type="number" min="0"></div>
+        <div><label class="ml">Төлөв</label><select class="ms" id="m-status">
+          <option value="new">Шинэ</option>
+          <option value="sale">Хямдрал</option>
+          <option value="">Ердийн</option>
+        </select></div>
+      </div>
+      <div class="mg"><label class="ml">Тайлбар</label><textarea class="mta" id="m-desc" placeholder="Барааны дэлгэрэнгүй тайлбар..."></textarea></div>
+      <div class="mr2">
+        <div class="mg"><label class="ml">Хэмжээ (таслалаар тусгаарла)</label><input class="mi" id="m-sizes" placeholder="XS, S, M, L, XL" type="text"></div>
+        <div class="mg"><label class="ml">Өнгө (таслалаар тусгаарла)</label><input class="mi" id="m-colors" placeholder="Хар, Цагаан, Улаан" type="text"></div>
+      </div>
+    </div>
+    <div class="mf">
+      <button class="btn-cancel" onclick="closeAddModal()">Болих</button>
+      <button class="tb-btn" onclick="addProduct()"><i class="ti ti-check" style="font-size:13px"></i>Нэмэх</button>
+    </div>
+  </div>
+</div>
+
+<script>
+const MNT = n => '₮' + Math.round(n).toLocaleString();
+
+// ===== FIREBASE FIRESTORE =====
+const FB_API = 'https://firestore.googleapis.com/v1/projects/aurum-shop-86d2b/databases/(default)/documents';
+const FB_KEY = 'AIzaSyAwtQldaRe5dZdTwGxgU3nSyStCRA-CacA';
+
+async function fbGet(col){
+  const r = await fetch(`${FB_API}/${col}?key=${FB_KEY}&pageSize=500`);
+  if(!r.ok){ console.error('FB GET error:',await r.text()); return []; }
+  const d = await r.json();
+  return (d.documents||[]).map(doc=>fbParse(doc)).filter(Boolean);
+}
+async function fbAdd(col, data){
+  const r = await fetch(`${FB_API}/${col}?key=${FB_KEY}`, {
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({fields: fbEncode(data)})
+  });
+  if(!r.ok){ console.error('FB ADD error:',r.status,await r.text()); return null; }
+  return fbParse(await r.json());
+}
+async function fbUpdate(col, id, data){
+  const mask = Object.keys(data).map(k=>`updateMask.fieldPaths=${k}`).join('&');
+  const r = await fetch(`${FB_API}/${col}/${id}?${mask}&key=${FB_KEY}`, {
+    method:'PATCH', headers:{'Content-Type':'application/json'},
+    body: JSON.stringify({fields: fbEncode(data)})
+  });
+  if(!r.ok) console.error('FB UPDATE error:',r.status,await r.text());
+  return r.ok;
+}
+async function fbDelete(col, id){
+  const r = await fetch(`${FB_API}/${col}/${id}?key=${FB_KEY}`, {method:'DELETE'});
+  return r.ok;
+}
+function fbEncode(obj){
+  const f={};
+  for(const [k,v] of Object.entries(obj)){
+    if(v===null||v===undefined) f[k]={nullValue:null};
+    else if(typeof v==='string') f[k]={stringValue:v};
+    else if(typeof v==='number') f[k]={integerValue:''+Math.round(v)};
+    else if(typeof v==='boolean') f[k]={booleanValue:v};
+    else f[k]={stringValue:JSON.stringify(v)};
+  }
+  return f;
+}
+function fbParse(doc){
+  if(!doc||!doc.fields) return null;
+  const o={_id:doc.name?doc.name.split('/').pop():null};
+  for(const [k,v] of Object.entries(doc.fields)){
+    if(v.stringValue!==undefined) o[k]=v.stringValue;
+    else if(v.integerValue!==undefined) o[k]=parseInt(v.integerValue);
+    else if(v.doubleValue!==undefined) o[k]=v.doubleValue;
+    else if(v.booleanValue!==undefined) o[k]=v.booleanValue;
+    else o[k]=null;
+  }
+  return o;
+}
+
+let sb = true; // Firebase mode
+
+// ===== DATA STORES =====
+let products = [];
+let orders = [];
+let customers = {};
+let faqs = [];
+let nextProdId = 100;
+let nextFaqId = 100;
+
+// ===== DB FUNCTIONS (Railway API) =====
+const API = 'https://aurum-shop-production.up.railway.app';
+
+async function dbLoadProducts(){
+  try {
+    const r = await fetch(API+'/api/products');
+    if(!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    products = data.map(r=>({id:r.id,name:r.name,brand:r.brand,cat:r.cat,price:r.price,stock:r.stock,status:r.status,imgData:r.img_data||null,desc:r.description||'',sizes:r.sizes||'',colors:r.colors||'',images:r.images||null}));
+    renderGrid(); renderProductsTable(); renderInventory();
+  } catch(e){ console.error('Load products error:',e); renderGrid(); }
+}
+async function dbAddProduct(p){
+  try {
+    const r = await fetch(API+'/api/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:p.name,brand:p.brand,cat:p.cat,price:p.price,stock:p.stock,status:p.status,img_data:p.imgData||null,description:p.desc||null,sizes:p.sizes||null,colors:p.colors||null,images:p.images||null})});
+    if(!r.ok) throw new Error(await r.text());
+    return await r.json();
+  } catch(e){ console.error('Add product error:',e); showToast('Хадгалах алдаа: '+e.message); return null; }
+}
+async function dbDeleteProduct(id){
+  const r = await fetch(API+'/api/products/'+id,{method:'DELETE'});
+  return r.ok;
+}
+async function dbUpdateProductStock(id,stock){
+  await fetch(API+'/api/products/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({stock})});
+}
+async function dbLoadOrders(){
+  try {
+    const r = await fetch(API+'/api/orders');
+    if(!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    orders = data.map(r=>({id:r.id,num:r.order_num,customer:r.customer,phone:r.phone,email:r.email,district:r.district,address:r.address,items:r.items?JSON.parse(r.items):[],delivery:r.delivery,total:r.total,date:r.created_at?r.created_at.slice(0,16):'',status:r.status}));
+    customers={};
+    orders.forEach(o=>{if(!customers[o.phone])customers[o.phone]={name:o.customer,phone:o.phone,email:o.email,orderCount:0,totalSpent:0};customers[o.phone].orderCount++;customers[o.phone].totalSpent+=o.total;});
+    refreshAdmin();
+  } catch(e){ console.error('Load orders error:',e); }
+}
+async function dbAddOrder(o){
+  try {
+    const r = await fetch(API+'/api/orders',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({order_num:o.num,customer:o.customer,phone:o.phone,email:o.email,district:o.district,address:o.address,items:o.items,delivery:o.delivery,total:o.total,status:o.status})});
+    if(!r.ok) throw new Error(await r.text());
+    return await r.json();
+  } catch(e){ console.error('Add order error:',e); showToast('Захиалга хадгалах алдаа'); return null; }
+}
+async function dbUpdateOrderStatus(id,status){
+  await fetch(API+'/api/orders/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({status})});
+}
+async function dbLoadFaqs(){
+  try {
+    const r = await fetch(API+'/api/faqs');
+    if(!r.ok) throw new Error(r.status);
+    const data = await r.json();
+    faqs = data.map(r=>({id:r.id,cat:r.cat,q:r.question,a:r.answer}));
+    renderFaqAdmin(); renderFaqPage();
+  } catch(e){ console.error('Load faqs error:',e); }
+}
+async function dbAddFaq(f){
+  try {
+    const r = await fetch(API+'/api/faqs',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({cat:f.cat,question:f.q,answer:f.a})});
+    if(!r.ok) throw new Error(await r.text());
+    return await r.json();
+  } catch(e){ showToast('FAQ нэмэх алдаа'); return null; }
+}
+async function dbUpdateFaq(id,f){
+  const r = await fetch(API+'/api/faqs/'+id,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({cat:f.cat,question:f.q,answer:f.a})});
+  return r.ok;
+}
+async function dbDeleteFaq(id){
+  const r = await fetch(API+'/api/faqs/'+id,{method:'DELETE'});
+  return r.ok;
+}
+
+// ===== AUTH =====
+let adminCredentials = { username: 'admin', password: 'aurum2026' };
+let isLoggedIn = false;
+
+function goAdmin(){
+  if(isLoggedIn){
+    document.getElementById('store-page').style.display='none';
+    document.getElementById('about-page').classList.remove('on');
+    document.getElementById('faq-page').classList.remove('on');
+    document.getElementById('admin-page').style.display='flex';
+    window.scrollTo(0,0);
+    refreshAdmin();
+  } else {
+    document.getElementById('login-user').value='';
+    document.getElementById('login-pass').value='';
+    document.getElementById('login-err').style.display='none';
+    document.getElementById('login-modal').classList.add('open');
+    setTimeout(()=>document.getElementById('login-user').focus(),100);
+  }
+}
+
+function loginSubmit(){
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value;
+  const err = document.getElementById('login-err');
+  if(u === adminCredentials.username && p === adminCredentials.password){
+    isLoggedIn = true;
+    err.style.display='none';
+    document.getElementById('login-modal').classList.remove('open');
+    document.getElementById('store-page').style.display='none';
+    document.getElementById('about-page').classList.remove('on');
+    document.getElementById('faq-page').classList.remove('on');
+    document.getElementById('admin-page').style.display='flex';
+    window.scrollTo(0,0);
+    refreshAdmin();
+  } else {
+    err.style.display='block';
+    document.getElementById('login-pass').value='';
+    document.getElementById('login-pass').focus();
+    // shake animation
+    const modal = document.querySelector('#login-modal .modal');
+    modal.style.animation='none';
+    modal.style.transform='translateX(8px)';
+    setTimeout(()=>{modal.style.transition='transform 0.3s';modal.style.transform='translateX(0)';},50);
+    setTimeout(()=>{modal.style.transition='';},350);
+  }
+}
+
+function togglePassVis(){
+  const p = document.getElementById('login-pass');
+  const eye = document.getElementById('pass-eye').querySelector('i');
+  if(p.type==='password'){
+    p.type='text';
+    eye.className='ti ti-eye-off';
+  } else {
+    p.type='password';
+    eye.className='ti ti-eye';
+  }
+}
+
+function changePassword(){
+  const old  = document.getElementById('set-oldpass').value;
+  const n1   = document.getElementById('set-newpass').value;
+  const n2   = document.getElementById('set-newpass2').value;
+  if(old !== adminCredentials.password){ showToast('Одоогийн нууц үг буруу байна!'); return; }
+  if(!n1 || n1.length < 4){ showToast('Шинэ нууц үг дор хаяж 4 тэмдэгт байх ёстой!'); return; }
+  if(n1 !== n2){ showToast('Шинэ нууц үг таарахгүй байна!'); return; }
+  adminCredentials.password = n1;
+  document.getElementById('set-oldpass').value='';
+  document.getElementById('set-newpass').value='';
+  document.getElementById('set-newpass2').value='';
+  showToast('Нууц үг амжилттай өөрчлөгдлөө ✓');
+}
+
+function saveUsername(){
+  const u = document.getElementById('set-username').value.trim();
+  if(!u){ showToast('Нэвтрэх нэр хоосон байна!'); return; }
+  adminCredentials.username = u;
+  document.getElementById('set-username').value='';
+  showToast('Нэвтрэх нэр өөрчлөгдлөө ✓');
+}
+
+function adminLogout(){
+  if(!confirm('Admin-аас гарах уу?')) return;
+  isLoggedIn = false;
+  document.getElementById('admin-page').style.display='none';
+  document.getElementById('store-page').style.display='block';
+  window.scrollTo(0,0);
+}
+function goStore(){
+  document.getElementById('admin-page').style.display='none';
+  document.getElementById('store-page').style.display='block';
+  window.scrollTo(0,0);
+}
+
+// ===== ADMIN NAV =====
+const ADM_INFO = {
+  dashboard:['Dashboard','Дэлгүүрийн ерөнхий тоймыг харна уу'],
+  orders:['Захиалгууд','Бүх захиалгыг удирдах'],
+  products:['Бүтээгдэхүүн','Барааны жагсаалтыг удирдах'],
+  inventory:['Нөөц','Агуулахын байдлыг хянах'],
+  customers:['Хэрэглэгчид','Хэрэглэгчдийг удирдах'],
+  faq:['FAQ','Түгээмэл асуулт хариулт удирдах'],
+  settings:['Тохиргоо','Дэлгүүрийн тохиргоог өөрчлөх']
+};
+function goAdmPage(id){
+  document.querySelectorAll('.ap').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nitem').forEach(n=>n.classList.remove('on'));
+  const pg = document.getElementById('ap-'+id);
+  const ni = document.getElementById('ni-'+id);
+  if(pg) pg.classList.add('on');
+  if(ni) ni.classList.add('on');
+  const t = ADM_INFO[id]||[id,''];
+  document.getElementById('adm-ttl').textContent = t[0];
+  document.getElementById('adm-sub').textContent = t[1];
+  refreshAdmin();
+  if(id==='faq') renderFaqAdmin();
+  if(id==='products' || id==='inventory') dbLoadProducts();
+  if(id==='orders') dbLoadOrders();
+  if(id==='dashboard'){ dbLoadProducts(); dbLoadOrders(); }
+}
+
+// ===== REFRESH ADMIN DATA =====
+function refreshAdmin(){
+  const rev = orders.reduce((s,o)=>s+o.total,0);
+  document.getElementById('d-revenue').textContent = MNT(rev);
+  document.getElementById('d-orders').textContent = orders.length;
+  document.getElementById('d-prods').textContent = products.length;
+  document.getElementById('order-count').textContent = orders.length;
+  const custCount = Object.keys(customers).length;
+  document.getElementById('d-customers').textContent = custCount;
+
+  // Dashboard orders
+  renderOrderTable('dash-orders-body', orders.slice(-5).reverse());
+  renderOrderTable('orders-body', [...orders].reverse());
+  renderProductsTable();
+  renderInventory();
+  renderCustomers();
+  renderSalesChart();
+}
+
+function statusBadge(s){
+  const map = {
+    'Хүргэгдсэн':'bg','Боловсруулж байна':'by','Илгээсэн':'bb','Цуцлагдсан':'br'
+  };
+  return `<span class="badge ${map[s]||'by'}">${s}</span>`;
+}
+
+function renderOrderTable(containerId, list){
+  const el = document.getElementById(containerId);
+  if(!list.length){
+    el.innerHTML='<div class="empty-table"><i class="ti ti-shopping-cart"></i>Одоохондоо захиалга алга</div>';
+    return;
+  }
+  el.innerHTML=`<table><thead><tr><th>Дугаар</th><th>Хэрэглэгч</th><th>Утас</th><th>Хаяг</th><th>Дүн</th><th>Огноо</th><th>Төлөв</th><th></th></tr></thead><tbody>`+
+    list.map(o=>`<tr>
+      <td><span class="oid">${o.num}</span></td>
+      <td>${o.customer}</td>
+      <td style="font-size:12px">${o.phone||''}</td>
+      <td style="color:var(--muted);font-size:12px;max-width:160px">${o.district||''} ${o.address||''}</td>
+      <td><span class="amt">${MNT(o.total)}</span></td>
+      <td style="color:var(--muted);font-size:12px">${o.date}</td>
+      <td>${statusBadge(o.status)}</td>
+      <td><select onchange="changeOrderStatus(${o.id},this.value)" style="background:var(--surface2);border:.5px solid var(--border);color:var(--white);font-size:11px;padding:4px 8px;font-family:'DM Sans',sans-serif;cursor:pointer">
+        <option ${o.status==='Боловсруулж байна'?'selected':''}>Боловсруулж байна</option>
+        <option ${o.status==='Илгээсэн'?'selected':''}>Илгээсэн</option>
+        <option ${o.status==='Хүргэгдсэн'?'selected':''}>Хүргэгдсэн</option>
+        <option ${o.status==='Цуцлагдсан'?'selected':''}>Цуцлагдсан</option>
+      </select></td>
+    </tr>`).join('')+
+  '</tbody></table>';
+}
+
+async function changeOrderStatus(id, status){
+  await dbUpdateOrderStatus(id, status);
+  await dbLoadOrders();
+}
+
+function renderProductsTable(){
+  const el = document.getElementById('products-body');
+  if(!products.length){
+    el.innerHTML='<div class="empty-table"><i class="ti ti-hanger"></i>Одоохондоо бараа алга. "Бараа нэмэх" товч дарна уу.</div>';
+    return;
+  }
+  const catLabel = {footwear:'Гутал',outerwear:'Хувцас',accessories:'Аксессуар',eyewear:'Нүдний шил'};
+  el.innerHTML=`<table><thead><tr><th>Зураг</th><th>Нэр</th><th>Брэнд</th><th>Ангилал</th><th>Үнэ</th><th>Нөөц</th><th>Төлөв</th><th></th></tr></thead><tbody>`+
+    products.map(p=>{
+      const imgCell = p.imgData
+        ? `<img src="${p.imgData}" style="width:38px;height:44px;object-fit:cover;border:.5px solid var(--border);display:block">`
+        : `<div style="width:38px;height:44px;background:var(--surface3);display:flex;align-items:center;justify-content:center"><i class="ti ti-photo" style="opacity:.2;font-size:16px"></i></div>`;
+      const stBadge = p.status==='new'?'<span class="badge bg">Шинэ</span>':p.status==='sale'?'<span class="badge by">Хямдрал</span>':'<span class="badge bb">Ердийн</span>';
+      const stockClass = p.stock<=3?'style="color:var(--red);font-weight:500"':p.stock<=10?'style="color:var(--yellow)"':'';
+      return `<tr>
+        <td>${imgCell}</td>
+        <td><b>${p.name}</b></td>
+        <td style="color:var(--muted);font-size:11px;letter-spacing:1px;text-transform:uppercase">${p.brand}</td>
+        <td style="color:var(--muted)">${catLabel[p.cat]||p.cat}</td>
+        <td><span class="amt">${MNT(p.price)}</span></td>
+        <td ${stockClass}>${p.stock}</td>
+        <td>${stBadge}</td>
+        <td style="white-space:nowrap">
+          <i class="ti ti-trash" style="color:var(--red);cursor:pointer;font-size:16px" onclick="deleteProduct(${p.id})" title="Устгах"></i>
+        </td>
+      </tr>`;
+    }).join('')+
+  '</tbody></table>';
+}
+
+async function deleteProduct(id){
+  if(confirm('Энэ барааг устгах уу?')){
+    const ok = await dbDeleteProduct(id);
+    if(ok){ await dbLoadProducts(); showToast('Бараа устгагдлаа'); }
+  }
+}
+
+function renderInventory(){
+  const el = document.getElementById('inv-body');
+  if(!products.length){
+    el.innerHTML='<div style="grid-column:1/-1" class="empty-table"><i class="ti ti-box"></i>Бараа нэмсний дараа нөөц харагдана</div>';
+    return;
+  }
+  el.innerHTML = products.map(p=>{
+    const pct = Math.min(100, Math.round(p.stock/50*100));
+    const cls = p.stock<=3?'low':p.stock<=10?'mid':'ok';
+    const note = p.stock<=3?'🚨 Яаралтай нөхөх':p.stock<=10?'⚠ Бага нөөц':'Хэвийн нөөц';
+    return `<div class="ic">
+      <div class="in">${p.name}</div>
+      <div class="ib2">${p.brand}</div>
+      <div class="inum ${cls}">${p.stock}</div>
+      <div class="itrk"><div class="ifill ${cls}" style="width:${pct}%"></div></div>
+      <div class="isub">${note}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderCustomers(){
+  const el = document.getElementById('customers-body');
+  const list = Object.values(customers);
+  if(!list.length){
+    el.innerHTML='<div class="empty-table"><i class="ti ti-users"></i>Захиалга хийсний дараа хэрэглэгчид харагдана</div>';
+    return;
+  }
+  el.innerHTML=`<table><thead><tr><th>Нэр</th><th>Утас</th><th>Имэйл</th><th>Захиалгын тоо</th><th>Нийт дүн</th></tr></thead><tbody>`+
+    list.map(c=>`<tr>
+      <td><b>${c.name}</b></td>
+      <td style="color:var(--muted)">${c.phone}</td>
+      <td style="color:var(--muted);font-size:12px">${c.email}</td>
+      <td>${c.orderCount}</td>
+      <td><span class="amt">${MNT(c.totalSpent)}</span></td>
+    </tr>`).join('')+
+  '</tbody></table>';
+}
+
+// ===== FAQ =====
+let editingFaqId = null;
+let activeFaqCat = 'all';
+
+function openFaq(){
+  document.getElementById('store-page').style.display='none';
+  document.getElementById('about-page').classList.remove('on');
+  document.getElementById('faq-page').classList.add('on');
+  renderFaqPage();
+  window.scrollTo(0,0);
+  const n3=document.getElementById('cart-num3');
+  if(n3) n3.textContent=document.getElementById('cart-num').textContent;
+}
+function closeFaq(){
+  document.getElementById('faq-page').classList.remove('on');
+  document.getElementById('store-page').style.display='block';
+  window.scrollTo(0,0);
+}
+
+function renderFaqPage(){
+  // Build category tabs
+  const cats = ['all',...[...new Set(faqs.map(f=>f.cat))]];
+  const catsEl = document.getElementById('faq-cats');
+  catsEl.innerHTML = cats.map(c=>`
+    <button class="faq-cat${c===activeFaqCat?' on':''}" onclick="filterFaq('${c}',this)">
+      ${c==='all'?'Бүгд':c}
+    </button>`).join('');
+
+  // Build FAQ list
+  const listEl = document.getElementById('faq-list');
+  const filtered = activeFaqCat==='all' ? faqs : faqs.filter(f=>f.cat===activeFaqCat);
+  if(!filtered.length){
+    listEl.innerHTML='<div class="faq-empty"><i class="ti ti-help"></i>Энэ ангилалд FAQ алга</div>';
+    return;
+  }
+  listEl.innerHTML = filtered.map(f=>`
+    <div class="faq-item">
+      <div class="faq-q" onclick="toggleFaq(this)">
+        <span class="faq-q-text">${f.q}</span>
+        <i class="ti ti-plus faq-icon"></i>
+      </div>
+      <div class="faq-a">
+        <div class="faq-a-inner">${f.a}</div>
+      </div>
+    </div>`).join('');
+}
+
+function toggleFaq(qEl){
+  const item = qEl.parentElement;
+  const ans  = item.querySelector('.faq-a');
+  const icon = item.querySelector('.faq-icon');
+  const isOpen = ans.classList.contains('open');
+  // close all
+  document.querySelectorAll('.faq-a.open').forEach(a=>a.classList.remove('open'));
+  document.querySelectorAll('.faq-icon.open').forEach(i=>i.classList.remove('open'));
+  if(!isOpen){ ans.classList.add('open'); icon.classList.add('open'); }
+}
+
+function filterFaq(cat, el){
+  activeFaqCat = cat;
+  renderFaqPage();
+}
+
+// Admin FAQ modal
+function openFaqModal(editId=null){
+  editingFaqId = editId;
+  const modal = document.getElementById('faq-modal');
+  if(editId){
+    const f = faqs.find(x=>x.id===editId);
+    document.getElementById('faq-modal-title').textContent = 'FAQ Засах';
+    document.getElementById('faq-cat-input').value = f.cat;
+    document.getElementById('faq-q-input').value  = f.q;
+    document.getElementById('faq-a-input').value  = f.a;
+  } else {
+    document.getElementById('faq-modal-title').textContent = 'FAQ Асуулт нэмэх';
+    document.getElementById('faq-cat-input').value = 'Захиалга';
+    document.getElementById('faq-q-input').value  = '';
+    document.getElementById('faq-a-input').value  = '';
+  }
+  document.getElementById('faq-q-input').classList.remove('err');
+  document.getElementById('faq-a-input').classList.remove('err');
+  modal.classList.add('open');
+}
+function closeFaqModal(){
+  document.getElementById('faq-modal').classList.remove('open');
+  editingFaqId = null;
+}
+async function saveFaq(){
+  const qEl = document.getElementById('faq-q-input');
+  const aEl = document.getElementById('faq-a-input');
+  const q = qEl.value.trim(), a = aEl.value.trim();
+  qEl.classList.remove('err'); aEl.classList.remove('err');
+  let ok=true;
+  if(!q){qEl.classList.add('err');ok=false;}
+  if(!a){aEl.classList.add('err');ok=false;}
+  if(!ok) return;
+  const cat = document.getElementById('faq-cat-input').value;
+  const msg = editingFaqId ? 'FAQ амжилттай засагдлаа ✓' : 'FAQ амжилттай нэмэгдлээ ✓';
+  if(editingFaqId){
+    await dbUpdateFaq(editingFaqId, {cat,q,a});
+  } else {
+    await dbAddFaq({cat,q,a});
+  }
+  closeFaqModal();
+  await dbLoadFaqs();
+  showToast(msg);
+}
+async function deleteFaq(id){
+  if(confirm('Энэ FAQ-г устгах уу?')){
+    const ok = await dbDeleteFaq(id);
+    if(ok){ await dbLoadFaqs(); showToast('FAQ устгагдлаа'); }
+  }
+}
+function renderFaqAdmin(){
+  const el = document.getElementById('faq-admin-panel');
+  if(!faqs.length){
+    el.innerHTML='<div class="empty-table"><i class="ti ti-help"></i>Одоохондоо FAQ алга. "Асуулт нэмэх" товч дарна уу.</div>';
+    return;
+  }
+  const catColors = {Захиалга:'bb',Хүргэлт:'bg',Буцаалт:'by',Төлбөр:'sa',Бүтээгдэхүүн:'br',Бусад:'by'};
+  el.innerHTML=`<table><thead><tr><th>Ангилал</th><th>Асуулт</th><th>Хариулт</th><th></th></tr></thead><tbody>`+
+    faqs.map(f=>`<tr>
+      <td><span class="badge ${catColors[f.cat]||'by'}">${f.cat}</span></td>
+      <td style="max-width:220px;font-weight:500">${f.q}</td>
+      <td style="color:var(--muted);font-size:12px;max-width:280px">${f.a.length>80?f.a.substring(0,79)+'…':f.a}</td>
+      <td style="white-space:nowrap">
+        <i class="ti ti-edit" style="color:var(--muted);cursor:pointer;font-size:16px;margin-right:12px" onclick="openFaqModal(${f.id})" title="Засах"></i>
+        <i class="ti ti-trash" style="color:var(--red);cursor:pointer;font-size:16px" onclick="deleteFaq(${f.id})" title="Устгах"></i>
+      </td>
+    </tr>`).join('')+
+  '</tbody></table>';
+}
+
+// ===== PRODUCT DETAIL MODAL =====
+let pdProduct = null;
+let pdImgIdx = 0;
+
+function openPD(id){
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  pdProduct = p;
+  pdImgIdx = 0;
+
+  // Images
+  const imgs = p.images ? JSON.parse(p.images) : (p.imgData ? [p.imgData] : []);
+  const mainEl = document.getElementById('pd-main-img');
+  const thumbsEl = document.getElementById('pd-thumbs');
+
+  if(imgs.length){
+    mainEl.innerHTML = `<img class="pd-img-main" id="pd-main" src="${imgs[0]}" alt="${p.name}">`;
+    thumbsEl.innerHTML = imgs.map((img,i)=>`<img class="pd-img-thumb ${i===0?'on':''}" src="${img}" onclick="switchPDImg(${i})">`).join('');
+    thumbsEl.style.display = imgs.length>1 ? 'flex' : 'none';
+  } else {
+    mainEl.innerHTML = `<div class="pd-img-main-placeholder"><i class="ti ti-hanger" style="font-size:64px;opacity:.15"></i></div>`;
+    thumbsEl.innerHTML = '';
+  }
+
+  // Info
+  document.getElementById('pd-brand').textContent = p.brand;
+  document.getElementById('pd-name').textContent = p.name;
+  document.getElementById('pd-price').textContent = MNT(p.price);
+  document.getElementById('pd-desc').textContent = p.desc||'';
+
+  // Sizes
+  const sizesWrap = document.getElementById('pd-sizes-wrap');
+  const sizesEl = document.getElementById('pd-sizes');
+  if(p.sizes){
+    sizesWrap.style.display='block';
+    sizesEl.innerHTML = p.sizes.split(',').map((s,i)=>`<button class="size-opt ${i===0?'on':''}" onclick="selectPDOpt(this,'size')">${s.trim()}</button>`).join('');
+  } else { sizesWrap.style.display='none'; }
+
+  // Colors
+  const colorsWrap = document.getElementById('pd-colors-wrap');
+  const colorsEl = document.getElementById('pd-colors');
+  if(p.colors){
+    colorsWrap.style.display='block';
+    colorsEl.innerHTML = p.colors.split(',').map((c,i)=>`<button class="size-opt ${i===0?'on':''}" onclick="selectPDOpt(this,'color')">${c.trim()}</button>`).join('');
+  } else { colorsWrap.style.display='none'; }
+
+  document.getElementById('pd-modal').classList.add('open');
+}
+
+function switchPDImg(i){
+  pdImgIdx = i;
+  const p = pdProduct;
+  const imgs = p.images ? JSON.parse(p.images) : (p.imgData ? [p.imgData] : []);
+  document.getElementById('pd-main').src = imgs[i];
+  document.querySelectorAll('.pd-img-thumb').forEach((t,j)=>t.classList.toggle('on',j===i));
+}
+
+function selectPDOpt(btn, type){
+  btn.closest('.size-opts').querySelectorAll('.size-opt').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+function closePD(){
+  document.getElementById('pd-modal').classList.remove('open');
+  pdProduct = null;
+}
+
+function addCartFromPD(){
+  if(!pdProduct) return;
+  // Check if size required
+  const sizeBtn = document.querySelector('#pd-sizes .size-opt.on');
+  const colorBtn = document.querySelector('#pd-colors .size-opt.on');
+  const size = sizeBtn ? sizeBtn.textContent : '';
+  const color = colorBtn ? colorBtn.textContent : '';
+  addCartWithOpts(pdProduct.id, size, color);
+  closePD();
+  openCart();
+}
+
+function addCartWithOpts(id, size, color){
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  const key = id+'|'+(size||'')+'|'+(color||'');
+  const ex = cart.find(x=>x.key===key);
+  if(ex){ ex.qty++; }
+  else { cart.push({...p, key, size, color, qty:1}); }
+  updCart();
+}
+
+// ===== SEARCH =====
+let searchOpen = false;
+function openSearch(){
+  document.getElementById('search-overlay').classList.add('open');
+  setTimeout(()=>document.getElementById('search-input').focus(),100);
+  searchOpen = true;
+}
+function closeSearch(){
+  document.getElementById('search-overlay').classList.remove('open');
+  document.getElementById('search-input').value='';
+  searchOpen = false;
+}
+function doSearch(q){
+  const el = document.getElementById('search-results');
+  if(!q.trim()){ el.innerHTML='<p class="search-empty">Хайх үгээ оруулна уу...</p>'; return; }
+  const res = products.filter(p=>
+    p.name.toLowerCase().includes(q.toLowerCase()) ||
+    p.brand.toLowerCase().includes(q.toLowerCase()) ||
+    (p.desc||'').toLowerCase().includes(q.toLowerCase())
+  );
+  if(!res.length){ el.innerHTML='<p class="search-empty">Илэрц олдсонгүй</p>'; return; }
+  el.innerHTML = res.map(p=>`
+    <div class="pcard" style="cursor:pointer" onclick="closeSearch()">
+      <div class="pthumb">${p.imgData?`<img src="${p.imgData}" style="width:100%;height:100%;object-fit:cover">`:'<i class="ti ti-hanger" style="font-size:48px;opacity:.15;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"></i>'}</div>
+      <div class="pinfo">
+        <div class="pbrand">${p.brand}</div>
+        <div class="pname">${p.name}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span class="pprice">${MNT(p.price)}</span>
+          <button class="padd" onclick="event.stopPropagation();addToCart(${p.id})">+ Сагс</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+document.addEventListener('keydown', e=>{ if(e.key==='Escape' && searchOpen) closeSearch(); });
+
+// ===== WISHLIST =====
+let wishlist = JSON.parse(localStorage.getItem('aurum_wl')||'[]');
+function saveWL(){ localStorage.setItem('aurum_wl', JSON.stringify(wishlist)); updWLNum(); }
+function updWLNum(){
+  const n = document.getElementById('wl-num');
+  if(n){ n.textContent=wishlist.length; n.style.display=wishlist.length?'flex':'none'; }
+}
+function toggleWishlist(id){
+  const idx = wishlist.indexOf(id);
+  if(idx>-1) wishlist.splice(idx,1);
+  else wishlist.push(id);
+  saveWL();
+  renderGrid();
+  showToast(idx>-1?'Wishlist-ээс хасагдлаа':'Wishlist-д нэмэгдлээ ❤️');
+}
+function openWishlist(){
+  if(!wishlist.length){ showToast('Wishlist хоосон байна'); return; }
+  openSearch();
+  const el = document.getElementById('search-results');
+  const res = products.filter(p=>wishlist.includes(p.id));
+  document.getElementById('search-input').value='';
+  document.querySelector('.search-input').placeholder='Таны хүслийн жагсаалт';
+  el.innerHTML = res.length ? res.map(p=>`
+    <div class="pcard">
+      <div class="pthumb">${p.imgData?`<img src="${p.imgData}" style="width:100%;height:100%;object-fit:cover">`:'<i class="ti ti-hanger" style="font-size:48px;opacity:.15;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)"></i>'}</div>
+      <div class="pinfo">
+        <div class="pbrand">${p.brand}</div>
+        <div class="pname">${p.name}</div>
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span class="pprice">${MNT(p.price)}</span>
+          <button class="padd" onclick="addToCart(${p.id});closeSearch()">+ Сагс</button>
+        </div>
+      </div>
+    </div>`).join('') : '<p class="search-empty">Wishlist хоосон</p>';
+}
+updWLNum();
+
+// ===== ORDER TRACKING =====
+function openTrack(){
+  document.getElementById('store-page').style.display='none';
+  document.getElementById('about-page').classList.remove('on');
+  document.getElementById('faq-page').classList.remove('on');
+  document.getElementById('track-page').classList.add('on');
+  document.getElementById('track-result').innerHTML='';
+  window.scrollTo(0,0);
+}
+function openTrackFromCheckout(){
+  const num = document.getElementById('ok-num').textContent;
+  closeCheckout();
+  openTrack();
+  if(num && num!=='—'){
+    document.getElementById('track-input').value = num;
+    setTimeout(trackOrder, 300);
+  }
+}
+function closeTrack(){
+  document.getElementById('track-page').classList.remove('on');
+  document.getElementById('store-page').style.display='block';
+  window.scrollTo(0,0);
+}
+async function trackOrder(){
+  const num = document.getElementById('track-input').value.trim().toUpperCase();
+  const el = document.getElementById('track-result');
+  if(!num){ el.innerHTML='<p style="color:var(--red);font-size:13px">Захиалгын дугаараа оруулна уу</p>'; return; }
+  // Load from API
+  const r = await fetch(API+'/api/orders');
+  const data = await r.json();
+  const order = data.find(o=>o.order_num===num || o.order_num.toUpperCase()===num);
+  if(!order){
+    el.innerHTML=`<div style="background:var(--surface);border:.5px solid var(--border);padding:28px;text-align:center">
+      <i class="ti ti-search-off" style="font-size:36px;opacity:.2;display:block;margin-bottom:12px"></i>
+      <p style="color:var(--muted);font-size:14px">Захиалга олдсонгүй. Дугаараа шалгана уу.</p>
+    </div>`;
+    return;
+  }
+  const steps = ['Боловсруулж байна','Илгээсэн','Хүргэгдсэн'];
+  const stepIdx = steps.indexOf(order.status);
+  const items = order.items ? JSON.parse(order.items) : [];
+  el.innerHTML=`
+    <div class="track-result">
+      <div class="track-num">${order.order_num}</div>
+      <div class="track-steps">
+        ${steps.map((s,i)=>`<div class="track-step ${stepIdx>=i?'done':''}">
+          <div class="track-step-dot">${stepIdx>=i?'✓':i+1}</div>
+          <div class="track-step-label">${s}</div>
+        </div>`).join('')}
+      </div>
+      <div class="track-row"><span class="track-label">Захиалагч</span><span>${order.customer}</span></div>
+      <div class="track-row"><span class="track-label">Утас</span><span>${order.phone||'-'}</span></div>
+      <div class="track-row"><span class="track-label">Дүүрэг</span><span>${order.district||'-'}</span></div>
+      <div class="track-row"><span class="track-label">Хаяг</span><span>${order.address||'-'}</span></div>
+      <div class="track-row"><span class="track-label">Бараа</span><span>${items.map(i=>i.name+' x'+i.qty).join(', ')||'-'}</span></div>
+      <div class="track-row"><span class="track-label">Нийт дүн</span><span style="color:var(--accent);font-weight:500">${MNT(order.total)}</span></div>
+      <div class="track-row"><span class="track-label">Огноо</span><span>${order.created_at?order.created_at.slice(0,16):'-'}</span></div>
+      <div class="track-row"><span class="track-label">Төлөв</span><span>${statusBadge(order.status)}</span></div>
+    </div>`;
+}
+
+// ===== SALES CHART =====
+function renderSalesChart(){
+  const el = document.getElementById('sales-chart');
+  if(!el || !orders.length){ return; }
+  // Last 7 days
+  const days = [];
+  for(let i=6;i>=0;i--){
+    const d = new Date();
+    d.setDate(d.getDate()-i);
+    days.push({
+      label: (d.getMonth()+1)+'/'+d.getDate(),
+      date: d.toISOString().slice(0,10),
+      total: 0
+    });
+  }
+  orders.forEach(o=>{
+    const oDate = (o.date||'').slice(0,10);
+    const day = days.find(d=>d.date===oDate);
+    if(day) day.total += o.total;
+  });
+  const max = Math.max(...days.map(d=>d.total), 1);
+  el.innerHTML = days.map(d=>`
+    <div class="chart-bar-wrap">
+      <div class="chart-bar-val">${d.total>0?MNT(d.total):''}</div>
+      <div class="chart-bar" style="height:${Math.max(d.total/max*140,2)}px"></div>
+      <div class="chart-bar-label">${d.label}</div>
+    </div>`).join('');
+}
+
+// ===== ABOUT PAGE =====
+function openAbout(){
+  document.getElementById('store-page').style.display='none';
+  document.getElementById('about-page').classList.add('on');
+  applySettingsToAbout();
+  window.scrollTo(0,0);
+}
+function closeAbout(){
+  document.getElementById('about-page').classList.remove('on');
+  document.getElementById('store-page').style.display='block';
+  window.scrollTo(0,0);
+}
+function applySettingsToAbout(){
+  const s = settings;
+  const el = id => document.getElementById(id);
+  if(el('about-phone'))   el('about-phone').textContent   = s.phone;
+  if(el('about-address')) el('about-address').textContent = s.address||'Сүхбаатар дүүрэг, Энхтайвны өргөн чөлөө 5';
+  if(el('about-email'))   el('about-email').textContent   = s.email||'info@aurum.mn';
+  if(el('about-lead-text')) el('about-lead-text').textContent = s.aboutText||el('about-lead-text').textContent;
+  if(el('about-story1') && s.story1) el('about-story1').textContent = s.story1;
+  if(el('about-story2') && s.story2) el('about-story2').textContent = s.story2;
+  // sync cart count
+  const n2 = el('cart-num2');
+  if(n2) n2.textContent = document.getElementById('cart-num').textContent;
+}
+function sendContact(){
+  const name = document.getElementById('cf-name').value.trim();
+  const contact = document.getElementById('cf-contact').value.trim();
+  const msg = document.getElementById('cf-msg').value.trim();
+  if(!name||!contact||!msg){ showToast('Бүх талбарыг бөглөнө үү!'); return; }
+  document.getElementById('cf-name').value='';
+  document.getElementById('cf-contact').value='';
+  document.getElementById('cf-msg').value='';
+  showToast('Таны мэдэгдэл илгээгдлээ. Бид тантай удахгүй холбогдоно ✓');
+}
+let settings = {
+  storeName: 'AURUM ХХК',
+  phone: '+976 7711 0000',
+  bank: 'Хаан банк',
+  accName: 'AURUM ХХК',
+  accNum: '5000112233',
+  address: 'Сүхбаатар дүүрэг, Энхтайвны өргөн чөлөө 5',
+  email: 'info@aurum.mn',
+  aboutText: '',
+  story1: '',
+  story2: ''
+};
+
+function saveSettings(){
+  const g = id => document.getElementById(id)?.value.trim();
+  const phone   = g('set-phone');
+  const bank    = g('set-bank');
+  const accName = g('set-accname');
+  const accNum  = (g('set-accnum')||'').replace(/\s/g,'');
+
+  if(!phone||!bank||!accName||!accNum){
+    showToast('Банк болон дансны мэдээллийг бөглөнө үү!'); return;
+  }
+
+  settings.storeName = g('set-storename') || settings.storeName;
+  settings.phone     = phone;
+  settings.bank      = bank;
+  settings.accName   = accName;
+  settings.accNum    = accNum;
+  if(g('set-address'))  settings.address   = g('set-address');
+  if(g('set-email'))    settings.email     = g('set-email');
+  if(g('set-about'))    settings.aboutText = g('set-about');
+  if(g('set-story1'))   settings.story1    = g('set-story1');
+  if(g('set-story2'))   settings.story2    = g('set-story2');
+
+  showToast('Тохиргоо амжилттай хадгалагдлаа ✓');
+}
+
+function applySettingsToCheckout(){
+  const el = (id) => document.getElementById(id);
+  if(el('co-bank-name'))  el('co-bank-name').textContent  = settings.bank;
+  if(el('co-acc-name'))   el('co-acc-name').textContent   = settings.accName;
+  if(el('co-acc-num'))    el('co-acc-num').textContent     = settings.accNum;
+  if(el('co-phone'))      el('co-phone').textContent       = settings.phone;
+  if(el('ok-accnum'))     el('ok-accnum').textContent      = settings.accNum;
+  if(el('ok-bank'))       el('ok-bank').textContent        = settings.bank;
+}
+
+function showToast(msg){
+  let t = document.getElementById('toast');
+  if(!t){
+    t = document.createElement('div');
+    t.id = 'toast';
+    t.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(20px);background:#1e1e1e;border:.5px solid rgba(200,169,110,.4);color:var(--white);padding:12px 24px;font-size:13px;z-index:9999;border-radius:2px;opacity:0;transition:all .3s;pointer-events:none;white-space:nowrap;';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1';
+  t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(()=>{
+    t.style.opacity='0';
+    t.style.transform='translateX(-50%) translateY(20px)';
+  }, 2500);
+}
+
+// ===== IMAGE UPLOAD =====
+let currentImgData = '';
+let currentImgDatas = []; // multiple images
+
+function previewImgs(files){
+  const arr = Array.from(files);
+  const remaining = 5 - currentImgDatas.length;
+  arr.slice(0, remaining).forEach(file=>{
+    if(!file.type.startsWith('image/')) return;
+    if(file.size > 3*1024*1024){ showToast('Зургийн хэмжээ 3MB-аас их байна!'); return; }
+    const reader = new FileReader();
+    reader.onload = e => {
+      currentImgDatas.push(e.target.result);
+      if(currentImgDatas.length===1) currentImgData = e.target.result;
+      renderImgThumbs();
+    };
+    reader.readAsDataURL(file);
+  });
+  document.getElementById('m-img').value='';
+}
+
+function renderImgThumbs(){
+  const container = document.getElementById('img-thumbs');
+  const thumbs = currentImgDatas.map((img,i)=>`
+    <div class="img-thumb-item">
+      <img src="${img}" alt="">
+      <button class="img-thumb-remove" onclick="removeImg(${i})">×</button>
+    </div>`).join('');
+  const addBtn = currentImgDatas.length < 5 ? `
+    <div class="img-add-btn" onclick="document.getElementById('m-img').click()">
+      <i class="ti ti-plus" style="font-size:20px;opacity:.4"></i>
+      <div style="font-size:10px;color:var(--muted);margin-top:4px">Нэмэх</div>
+    </div>` : '';
+  container.innerHTML = thumbs + addBtn;
+}
+
+function removeImg(i){
+  currentImgDatas.splice(i,1);
+  currentImgData = currentImgDatas[0]||'';
+  renderImgThumbs();
+}
+
+function previewImg(file){ if(file) previewImgs([file]); }
+function dropImg(e){
+  e.preventDefault();
+  previewImgs(e.dataTransfer.files);
+}
+function clearImg(){
+  currentImgData='';
+  currentImgDatas=[];
+  renderImgThumbs();
+}
+
+// ===== ADD PRODUCT =====
+function openAddModal(){
+  document.getElementById('add-modal').classList.add('open');
+}
+function closeAddModal(){
+  document.getElementById('add-modal').classList.remove('open');
+  document.getElementById('m-name').value='';
+  document.getElementById('m-price').value='';
+  document.getElementById('m-stock').value='';
+  document.getElementById('m-desc').value='';
+  document.getElementById('m-sizes').value='';
+  document.getElementById('m-colors').value='';
+  document.getElementById('m-name').classList.remove('err');
+  document.getElementById('m-price').classList.remove('err');
+  clearImg();
+  renderImgThumbs();
+}
+async function addProduct(){
+  const nameEl = document.getElementById('m-name');
+  const priceEl = document.getElementById('m-price');
+  const name = nameEl.value.trim();
+  const price = parseInt(priceEl.value)||0;
+  let ok = true;
+  nameEl.classList.remove('err'); priceEl.classList.remove('err');
+  if(!name){ nameEl.classList.add('err'); ok=false; }
+  if(!price){ priceEl.classList.add('err'); ok=false; }
+  if(!ok){ return; }
+
+  const btn = document.querySelector('#add-modal .tb-btn');
+  if(btn){ btn.textContent='Хадгалж байна...'; btn.disabled=true; }
+
+  const prod = {
+    name,
+    brand: document.getElementById('m-brand').value,
+    cat: document.getElementById('m-cat').value,
+    price,
+    stock: parseInt(document.getElementById('m-stock').value)||0,
+    status: document.getElementById('m-status').value,
+    desc: document.getElementById('m-desc').value.trim(),
+    sizes: document.getElementById('m-sizes').value.trim(),
+    colors: document.getElementById('m-colors').value.trim(),
+    imgData: currentImgData,
+    images: JSON.stringify(currentImgDatas)
+  };
+
+  const saved = await dbAddProduct(prod);
+  if(btn){ btn.innerHTML='<i class="ti ti-check" style="font-size:13px"></i>Нэмэх'; btn.disabled=false; }
+
+  if(saved){
+    closeAddModal();
+    await dbLoadProducts();
+    showToast('Бараа амжилттай нэмэгдлээ ✓');
+    goAdmPage('products');
+  }
+}
+
+// ===== STORE: PRODUCTS =====
+let bF='all', cF='all';
+function renderGrid(){
+  const g = document.getElementById('pgrid');
+  g.innerHTML='';
+  const filtered = products.filter(p=>(bF==='all'||p.brand.toLowerCase().replace(/\s/g,'')=== bF)||(bF==='all')).filter(p=>cF==='all'||p.cat===cF);
+
+  // brand filter
+  const byBrand = products.filter(p=>{
+    if(bF==='all') return true;
+    const bname = p.brand.toLowerCase().replace(/\s/g,'');
+    return bname===bF || (bF==='margiela'&&bname.includes('margiela'));
+  }).filter(p=>cF==='all'||p.cat===cF);
+
+  if(!byBrand.length){
+    g.innerHTML='<div class="empty-grid"><i class="ti ti-hanger"></i><div>Admin-аас бараа нэмнэ үү</div></div>';
+    return;
+  }
+  byBrand.forEach(p=>{
+    const d = document.createElement('div');
+    d.className='pcard';
+    d.onclick = ()=>openPD(p.id);
+    const badgeHtml = p.status==='new'?'<span class="badge-new">Шинэ</span>':p.status==='sale'?'<span class="badge-sale">Хямдрал</span>':'';
+    const thumbContent = p.imgData
+      ? `<img src="${p.imgData}" alt="${p.name}">`
+      : `<i class="ti ti-shirt pthumb-icon"></i>`;
+    d.innerHTML=`
+      <div class="pthumb">
+        ${thumbContent}
+        <span class="pbr">${p.brand}</span>
+        ${badgeHtml}
+      </div>
+      <div class="povl">
+        <button class="add-btn" onclick="addCart(${p.id});event.stopPropagation()">Сагсанд нэмэх</button>
+      </div>
+      <div class="pinfo">
+        <p class="pname">${p.name}</p>
+        ${p.sizes?`<div style="display:flex;gap:4px;flex-wrap:wrap;margin-bottom:6px">${p.sizes.split(',').map(s=>`<span style="font-size:9px;padding:2px 6px;border:.5px solid var(--border);color:var(--muted)">${s.trim()}</span>`).join('')}</div>`:''}
+        <div class="prow">
+          <span class="pprice">${MNT(p.price)}</span>
+          <button class="wish ${wishlist.includes(p.id)?'on':''}" onclick="event.stopPropagation();toggleWishlist(${p.id})"><i class="ti ti-heart"></i></button>
+        </div>
+      </div>`;
+    g.appendChild(d);
+  });
+}
+
+function filterBrand(b,el){
+  document.querySelectorAll('.bp').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on'); bF=b; renderGrid();
+}
+function setCat(c,el){
+  document.querySelectorAll('.fp').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on'); cF=c; renderGrid();
+}
+
+// ===== CART =====
+let cart=[];
+function addCart(id){
+  const p = products.find(x=>x.id===id);
+  if(!p) return;
+  const ex = cart.find(x=>x.id===id);
+  ex ? ex.qty++ : cart.push({...p, qty:1});
+  updCart(); openCart();
+  const n = document.getElementById('cart-num');
+  n.style.transform='scale(1.5)';
+  setTimeout(()=>n.style.transform='',250);
+}
+function chQty(id,d){
+  const i=cart.find(x=>x.id===id);
+  if(!i) return;
+  i.qty+=d;
+  if(i.qty<=0) cart=cart.filter(x=>x.id!==id);
+  updCart();
+}
+function remItem(id){ cart=cart.filter(x=>x.id!==id); updCart(); }
+function getItemPrice(i){ return i.price; }
+
+function updCart(){
+  const total = cart.reduce((s,i)=>s+i.price*i.qty,0);
+  const count = cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cart-num').textContent=count;
+  const body=document.getElementById('drw-body');
+  const foot=document.getElementById('drw-foot');
+  if(!cart.length){
+    body.innerHTML='<div class="empty-cart"><i class="ti ti-shopping-bag"></i><p>Сагс хоосон байна</p></div>';
+    foot.style.display='none'; return;
+  }
+  foot.style.display='block';
+  document.getElementById('drw-total').textContent=MNT(total);
+  const rem=500000-total;
+  document.getElementById('free-note').textContent=rem>0?`Үнэгүй хүргэлтэнд ${MNT(rem)} дутуу`:'✓ Үнэгүй хүргэлт хамаарна';
+  body.innerHTML=cart.map(i=>{
+    const imgHtml = i.imgData
+      ? `<div class="ci-img"><img src="${i.imgData}" alt="${i.name}"></div>`
+      : `<div class="ci-img"><i class="ti ti-shirt" style="font-size:24px;opacity:.15"></i></div>`;
+    return `<div class="ci">
+      ${imgHtml}
+      <div class="ci-data">
+        <div class="ci-brand">${i.brand}</div>
+        <div class="ci-name">${i.name}</div>
+        <div class="ci-price">${MNT(i.price)}</div>
+        <div class="ci-qty">
+          <button class="qbtn" onclick="chQty(${i.id},-1)">−</button>
+          <span class="qval">${i.qty}</span>
+          <button class="qbtn" onclick="chQty(${i.id},1)">+</button>
+        </div>
+      </div>
+      <button class="ci-del" onclick="remItem(${i.id})"><i class="ti ti-x"></i></button>
+    </div>`;
+  }).join('');
+}
+function openCart(){ document.getElementById('scrim').classList.add('on'); document.getElementById('drawer').classList.add('on'); }
+function closeCart(){ document.getElementById('scrim').classList.remove('on'); document.getElementById('drawer').classList.remove('on'); }
+
+// ===== CHECKOUT =====
+let coStep=1, delFee=10000, bankRef='';
+function gTotal(){ return cart.reduce((s,i)=>s+i.price*i.qty,0)+delFee; }
+function updSum(){
+  document.getElementById('sum-items').innerHTML=cart.map(i=>`
+    <div class="sum-item">
+      <span class="sum-iname">${i.name.length>28?i.name.substring(0,27)+'…':i.name} ×${i.qty}</span>
+      <span class="sum-iprice">${MNT(i.price*i.qty)}</span>
+    </div>`).join('');
+  document.getElementById('sum-del').textContent=delFee===0?'Үнэгүй':MNT(delFee);
+  document.getElementById('sum-total').textContent=MNT(gTotal());
+  document.getElementById('bamt').textContent=MNT(gTotal());
+}
+function openCheckout(){
+  if(!cart.length) return;
+  closeCart();
+  coStep=1;
+  bankRef='AURUM-'+Math.floor(1000+Math.random()*9000);
+  document.getElementById('bref').textContent=bankRef;
+  document.getElementById('bref2').textContent=bankRef;
+  document.getElementById('ok-ref').textContent=bankRef;
+  applySettingsToCheckout();
+  updSum(); rndCoStep();
+  document.getElementById('co-ok').classList.remove('show');
+  document.getElementById('sbr').style.display='flex';
+  document.getElementById('co-inner').style.display='flex';
+  document.getElementById('co-foot').style.display='flex';
+  document.getElementById('co-wrap').classList.add('on');
+}
+function closeCheckout(){ document.getElementById('co-wrap').classList.remove('on'); }
+function rndCoStep(){
+  [1,2,3].forEach(n=>{
+    document.getElementById('st'+n).className='step-tab'+(n===coStep?' act':n<coStep?' done':'');
+    document.getElementById('s'+n).style.display=n===coStep?'block':'none';
+  });
+  document.getElementById('co-bk').style.visibility=coStep>1?'visible':'hidden';
+  document.getElementById('co-nx').textContent=coStep===3?'Захиалга өгөх →':'Үргэлжлүүлэх →';
+}
+async function coNext(){
+  if(coStep===1){
+    const ids=['f-ln','f-fn','f-ph','f-em','f-di','f-ad'];
+    let ok=true;
+    ids.forEach(id=>{const el=document.getElementById(id);el.classList.remove('err');if(!el.value.trim()){el.classList.add('err');ok=false;}});
+    if(!ok) return;
+    coStep=2; rndCoStep(); updSum();
+  } else if(coStep===2){
+    coStep=3; rndCoStep(); updSum();
+  } else {
+    const btn = document.getElementById('co-nx');
+    btn.textContent='Хадгалж байна...'; btn.disabled=true;
+
+    const orderNum = bankRef;
+    const custName = document.getElementById('f-ln').value+' '+document.getElementById('f-fn').value;
+    const phone = document.getElementById('f-ph').value;
+    const email = document.getElementById('f-em').value;
+
+    const order = {
+      num: orderNum, customer: custName, phone, email,
+      district: document.getElementById('f-di').value,
+      address: document.getElementById('f-ad').value,
+      items: cart.map(i=>({id:i.id,name:i.name,brand:i.brand,price:i.price,qty:i.qty})),
+      delivery: delFee, total: gTotal(), status: 'Боловсруулж байна'
+    };
+
+    const saved = await dbAddOrder(order);
+    btn.textContent='Захиалга өгөх →'; btn.disabled=false;
+
+    if(saved){
+      // Reduce stock in DB
+      for(const ci of cart){
+        const p = products.find(x=>x.id===ci.id);
+        if(p){ await dbUpdateProductStock(p.id, Math.max(0, p.stock - ci.qty)); }
+      }
+      document.getElementById('ok-num').textContent=orderNum;
+      document.getElementById('ok-accnum').textContent=settings.accNum;
+      document.getElementById('ok-bank').textContent=settings.bank;
+      document.getElementById('sbr').style.display='none';
+      document.getElementById('co-inner').style.display='none';
+      document.getElementById('co-foot').style.display='none';
+      document.getElementById('co-ok').classList.add('show');
+      cart=[]; updCart();
+      dbLoadProducts();
+    }
+  }
+}
+function coBack(){ if(coStep>1){ coStep--; rndCoStep(); updSum(); } }
+function setDel(el,fee){ document.querySelectorAll('.dopt').forEach(x=>x.classList.remove('on')); el.classList.add('on'); delFee=fee; updSum(); }
+function doCopy(txt,btn){ navigator.clipboard.writeText(txt).then(()=>{ const o=btn.textContent; btn.textContent='✓'; setTimeout(()=>btn.textContent=o,2000); }); }
+function scrollSec(){ document.getElementById('prod-sec').scrollIntoView({behavior:'smooth'}); }
+
+// Init marquee — clone inner for seamless loop
+(function(){
+  const inner = document.getElementById('marquee-inner');
+  if(inner){
+    const clone = inner.cloneNode(true);
+    clone.setAttribute('aria-hidden','true');
+    inner.parentElement.appendChild(clone);
+  }
+})();
+
+// Init — load all data from Supabase
+async function init(){
+  updCart();
+  await Promise.all([dbLoadProducts(), dbLoadOrders(), dbLoadFaqs()]);
+}
+init();
+</script>
+</body>
+</html>

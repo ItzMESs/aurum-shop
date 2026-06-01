@@ -35,6 +35,7 @@ async function initDB() {
       description TEXT,
       sizes TEXT,
       colors TEXT,
+      images TEXT,
       created_at TIMESTAMP DEFAULT NOW()
     );
     CREATE TABLE IF NOT EXISTS orders (
@@ -68,10 +69,10 @@ app.get('/api/products', async (req, res) => {
   res.json(r.rows);
 });
 app.post('/api/products', async (req, res) => {
-  const { name, brand, cat, price, stock, status, img_data, description, sizes, colors } = req.body;
+  const { name, brand, cat, price, stock, status, img_data, description, sizes, colors, images } = req.body;
   const r = await pool.query(
-    'INSERT INTO products (name,brand,cat,price,stock,status,img_data,description,sizes,colors) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *',
-    [name, brand, cat, price, stock||0, status||'new', img_data||null, description||null, sizes||null, colors||null]
+    'INSERT INTO products (name,brand,cat,price,stock,status,img_data,description,sizes,colors,images) VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11) RETURNING *',
+    [name, brand, cat, price, stock||0, status||'new', img_data||null, description||null, sizes||null, colors||null, images||null]
   );
   res.json(r.rows[0]);
 });
