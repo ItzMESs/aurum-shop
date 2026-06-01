@@ -1456,63 +1456,6 @@ async function dbDeleteFaq(id){
   return r.ok;
 }
 
-// ===== DATA STORES =====
-let products = [];
-let orders = [];
-let customers = {};
-let faqs = [];
-let nextProdId = 100;
-let nextFaqId = 100;
-
-// ===== DB FUNCTIONS (Firebase) =====
-async function dbLoadProducts(){
-  const data = await fbGet('products');
-  products = data.map(r=>({id:r._id,name:r.name,brand:r.brand,cat:r.cat,price:r.price,stock:r.stock,status:r.status,imgData:r.img_data||null,desc:r.description||''}));
-  renderGrid(); renderProductsTable(); renderInventory();
-}
-async function dbAddProduct(p){
-  const doc = await fbAdd('products',{name:p.name,brand:p.brand,cat:p.cat,price:p.price,stock:p.stock,status:p.status,img_data:p.imgData||'',description:p.desc||''});
-  if(!doc){showToast('Хадгалах алдаа');return null;}
-  return {id:doc._id,...doc};
-}
-async function dbDeleteProduct(id){
-  return await fbDelete('products',id);
-}
-async function dbUpdateProductStock(id,stock){
-  await fbUpdate('products',id,{stock});
-}
-async function dbLoadOrders(){
-  const data = await fbGet('orders');
-  orders = data.map(r=>({id:r._id,num:r.order_num,customer:r.customer,phone:r.phone,email:r.email,district:r.district,address:r.address,items:r.items?JSON.parse(r.items):[],delivery:r.delivery,total:r.total,date:r.created_at||'',status:r.status}));
-  customers={};
-  orders.forEach(o=>{if(!customers[o.phone])customers[o.phone]={name:o.customer,phone:o.phone,email:o.email,orderCount:0,totalSpent:0};customers[o.phone].orderCount++;customers[o.phone].totalSpent+=o.total;});
-  refreshAdmin();
-}
-async function dbAddOrder(o){
-  const doc = await fbAdd('orders',{order_num:o.num,customer:o.customer,phone:o.phone,email:o.email,district:o.district,address:o.address,items:JSON.stringify(o.items),delivery:o.delivery,total:o.total,status:o.status,created_at:new Date().toISOString().slice(0,16).replace('T',' ')});
-  if(!doc){showToast('Захиалга хадгалах алдаа');return null;}
-  return {id:doc._id,...doc};
-}
-async function dbUpdateOrderStatus(id,status){
-  await fbUpdate('orders',id,{status});
-}
-async function dbLoadFaqs(){
-  const data = await fbGet('faqs');
-  faqs = data.map(r=>({id:r._id,cat:r.cat,q:r.question,a:r.answer}));
-  renderFaqAdmin(); renderFaqPage();
-}
-async function dbAddFaq(f){
-  const doc = await fbAdd('faqs',{cat:f.cat,question:f.q,answer:f.a});
-  if(!doc){showToast('FAQ нэмэх алдаа');return null;}
-  return {id:doc._id,...doc};
-}
-async function dbUpdateFaq(id,f){
-  return await fbUpdate('faqs',id,{cat:f.cat,question:f.q,answer:f.a});
-}
-async function dbDeleteFaq(id){
-  return await fbDelete('faqs',id);
-}
-
 // ===== AUTH =====
 let adminCredentials = { username: 'admin', password: 'aurum2026' };
 let isLoggedIn = false;
