@@ -1429,7 +1429,7 @@ tr:hover td{background:var(--surface2);}
     <div class="mh"><span class="mt2">Шинэ бараа нэмэх</span><button class="mc" onclick="closeAddModal()"><i class="ti ti-x"></i></button></div>
     <div class="mb">
       <!-- Image upload -->
-      <div class="mg"><label class="ml">Барааны зурагнууд (max 5)</label>
+      <div class="mg"><label class="ml">Барааны зураг (1 зураг)</label>
         <div class="multi-img-upload">
           <div class="img-thumbs" id="img-thumbs">
             <div class="img-add-btn" onclick="document.getElementById('m-img').click()">
@@ -1554,13 +1554,13 @@ async function dbLoadProducts(){
     const r = await fetch(API+'/api/products');
     if(!r.ok) throw new Error(r.status);
     const data = await r.json();
-    products = data.map(r=>({id:r.id,name:r.name,brand:r.brand,cat:r.cat,price:r.price,stock:r.stock,status:r.status,imgData:r.img_data||null,desc:r.description||'',sizes:r.sizes||'',colors:r.colors||'',images:r.images||null}));
+    products = data.map(r=>({id:r.id,name:r.name,brand:r.brand,cat:r.cat,price:r.price,stock:r.stock,status:r.status,imgData:r.img_data||null,desc:r.description||'',sizes:r.sizes||'',colors:r.colors||''}));
     renderGrid(); renderProductsTable(); renderInventory();
   } catch(e){ console.error('Load products error:',e); renderGrid(); }
 }
 async function dbAddProduct(p){
   try {
-    const r = await fetch(API+'/api/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:p.name,brand:p.brand,cat:p.cat,price:p.price,stock:p.stock,status:p.status,img_data:p.imgData||null,description:p.desc||null,sizes:p.sizes||null,colors:p.colors||null,images:p.images||null})});
+    const r = await fetch(API+'/api/products',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:p.name,brand:p.brand,cat:p.cat,price:p.price,stock:p.stock,status:p.status,img_data:p.imgData||null,description:p.desc||null,sizes:p.sizes||null,colors:p.colors||null})});
     if(!r.ok) throw new Error(await r.text());
     return await r.json();
   } catch(e){ console.error('Add product error:',e); showToast('Хадгалах алдаа: '+e.message); return null; }
@@ -2015,7 +2015,7 @@ function openPD(id){
   pdImgIdx = 0;
 
   // Images
-  const imgs = p.images ? JSON.parse(p.images) : (p.imgData ? [p.imgData] : []);
+  const imgs = p.imgData ? [p.imgData] : [];
   const mainEl = document.getElementById('pd-main-img');
   const thumbsEl = document.getElementById('pd-thumbs');
 
@@ -2056,7 +2056,7 @@ function openPD(id){
 function switchPDImg(i){
   pdImgIdx = i;
   const p = pdProduct;
-  const imgs = p.images ? JSON.parse(p.images) : (p.imgData ? [p.imgData] : []);
+  const imgs = p.imgData ? [p.imgData] : [];
   document.getElementById('pd-main').src = imgs[i];
   document.querySelectorAll('.pd-img-thumb').forEach((t,j)=>t.classList.toggle('on',j===i));
 }
@@ -2363,19 +2363,32 @@ let currentImgDatas = []; // multiple images
 
 function previewImgs(files){
   const arr = Array.from(files);
-  const remaining = 5 - currentImgDatas.length;
-  arr.slice(0, remaining).forEach(file=>{
-    if(!file.type.startsWith('image/')) return;
-    if(file.size > 3*1024*1024){ showToast('Зургийн хэмжээ 3MB-аас их байна!'); return; }
-    const reader = new FileReader();
-    reader.onload = e => {
-      currentImgDatas.push(e.target.result);
-      if(currentImgDatas.length===1) currentImgData = e.target.result;
-      renderImgThumbs();
-    };
-    reader.readAsDataURL(file);
+  if(currentImgDatas.length >= 1){ showToast('1 зураг л оруулна уу'); return; }
+  compressImg(arr[0], compressed=>{
+    currentImgDatas = [compressed];
+    currentImgData = compressed;
+    renderImgThumbs();
   });
   document.getElementById('m-img').value='';
+}
+
+function compressImg(file, cb){
+  const canvas = document.createElement('canvas');
+  const img = new Image();
+  const reader = new FileReader();
+  reader.onload = e => {
+    img.onload = () => {
+      const MAX = 600;
+      let w = img.width, h = img.height;
+      if(w > MAX){ h = Math.round(h*MAX/w); w = MAX; }
+      if(h > MAX){ w = Math.round(w*MAX/h); h = MAX; }
+      canvas.width = w; canvas.height = h;
+      canvas.getContext('2d').drawImage(img,0,0,w,h);
+      cb(canvas.toDataURL('image/jpeg', 0.6));
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
 }
 
 function renderImgThumbs(){
@@ -2385,7 +2398,7 @@ function renderImgThumbs(){
       <img src="${img}" alt="">
       <button class="img-thumb-remove" onclick="removeImg(${i})">×</button>
     </div>`).join('');
-  const addBtn = currentImgDatas.length < 5 ? `
+  const addBtn = currentImgDatas.length < 1 ? `
     <div class="img-add-btn" onclick="document.getElementById('m-img').click()">
       <i class="ti ti-plus" style="font-size:20px;opacity:.4"></i>
       <div style="font-size:10px;color:var(--muted);margin-top:4px">Нэмэх</div>
@@ -2451,8 +2464,7 @@ async function addProduct(){
     desc: document.getElementById('m-desc').value.trim(),
     sizes: document.getElementById('m-sizes').value.trim(),
     colors: document.getElementById('m-colors').value.trim(),
-    imgData: currentImgData,
-    images: JSON.stringify(currentImgDatas)
+    imgData: currentImgData
   };
 
   const saved = await dbAddProduct(prod);
